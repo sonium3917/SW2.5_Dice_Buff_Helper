@@ -39,5 +39,6 @@ SW2.5 Dice Buff Helper
 ver.1.0 公開
 
 @2026 そにうむ(sonium) All rights reserved.
+
 Unauthorized reproduction or redistribution is prohibited.
                           
