@@ -1,0 +1,1746 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>SW2.5 Dice Buff Helper</title>
+  <link rel="shortcut icon" href="SW2.5_Dice_Buff_Helper_icon.ico">
+</head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<div class="container" id="container">
+  <header id="header">
+  <h3>SW2.5 Dice Buff Helper</h3>
+ </header>
+
+  <div id="snackbar"></div>
+    <div class="tab_bar">
+      <button class="tab-btn" onclick="showTab('tab_damage',this)">ダメージ</button>
+      <button class="tab-btn" onclick="showTab('tab_hit',this)">命中</button>
+      <button class="tab-btn" onclick="showTab('tab_avoid',this)">回避</button>
+      <button class="tab-btn" onclick="showTab('tab_save',this)">データ管理</button>
+      <button class="tab-btn" onclick="showTab('tab_hint',this)">ヒント</button>
+
+    </div>
+  <hr>
+  <div id="tab_damage" class="tab-content">
+    <div class="row">
+      <button class="btn 1" onclick="damage_save('file')">ダメージセーブ</button>
+      <button class="btn 1" onclick="damage_load('file')">ダメージロード</button>
+    </div>
+
+    <div class="row">
+      <button class="btn 1" onclick="damage_show()">表示/コピー</button>
+      <div>
+        <input type="checkbox" class="chk 1" id="damage_enable_separate"> 個別出力
+      </div>
+
+    </div>
+
+    <p id="damage_text" class="text">　</P>
+
+    <hr>
+
+    <p style="margin:20px 0px"></p>
+
+    </p>
+    <div class="row" style="position: relative;">
+      <div class="row part" style="position: relative;">
+        <input id="weapon_name_field"  class="fld 2" placeholder="">
+        <label class="lab weapon" for="weapon_name_field">武器名</label>
+      </div>
+
+      
+      <div>
+        <input type="checkbox" onclick=enable_enemy_defence() class="chk 2" id="enable_enemy_defence"> 敵防護点あり
+      </div>
+      
+      <div class="row part" style="position: relative;">
+        <input id="enemy_defence"  class="fld 2 Z" placeholder="">
+        <label id="lab_defence" class="lab defence" for="impact_name_field">敵防護点</label>
+      </div>
+    </div>
+    <p style="margin:20px 0px"></p>
+    <div class="row">
+      
+      <div class="row part" style="position: relative;">
+        <input id="impact_value_field"  class="fld 2 N"  placeholder="" >
+        <label class="lab impact" for="impact_name_field">威力値</label>
+      </div>
+      <div class="row part" style="position: relative;">
+        <input id="critical_value_field"  class="fld 2 N" placeholder="">
+        <label class="lab critical" for="impact_name_field">クリティカル値</label>
+      </div>
+      <div class="row part" style="position: relative;">
+        <input id="damage_fix_value_field"  class="fld 2 Z" placeholder="" >
+        <label class="lab fix" for="impact_name_field">固定値</label>
+      </div>
+      
+    </div>
+    <div class="row">
+      <div >
+        <input type="checkbox" class="chk 2" id="enable_half_damage"> ダメージ半減
+      </div>
+      <div>
+        <input type="checkbox" class="chk 2" id="enable_no_critical"> クリティカル無し
+      </div>
+    </div>
+    <hr>
+
+    <div class="row">
+      <button class="btn 3" onclick="damage_add_field()">+</button>
+      <button class="btn 3" onclick="damage_remove_field()">-</button>
+    </div>
+    <div class="field_index field-1">
+      <div>効果名</div>
+      <div>効果</div>
+      <div>ダイス効果</div>
+    </div>
+
+    <div id="damage_fields" class="buff_field">
+    </div>
+
+  <!-- <button onclick="test()" style="display:none;">test</button>-->
+    <button onclick="test()" style="display:none;">test</button>
+
+    
+  </div>
+
+
+
+  <div id="tab_hit" class="tab-content">
+    <div class="row">
+      <button class="btn 1" onclick="hit_save('file')">命中セーブ</button>
+      <button class="btn 1" onclick="hit_load('file')">命中ロード</button>
+    </div>
+
+    <div class="row">
+      <button class="btn 1" onclick="hit_show()">表示/コピー</button>
+      <div>
+        <input class="chk 1" type="checkbox"  id="hit_enable_separate"> 個別出力
+      </div>
+    </div>
+
+    <p id="hit_text" class="text">　</P>
+
+    <hr>
+
+    <p style="margin:20px 0px"></p>
+    <div class="row">
+      <div class="row part" style="position: relative;">
+        <input class="fld 2 Z" id="hit_value_field" placeholder="" >
+        <label class="lab fix" for="hit_value_field" >固定値</label>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+      <button class="btn 3" onclick="hit_add_field()">+</button>
+      <button class="btn 3" onclick="hit_remove_field()">-</button>
+    </div>
+    <div class="field_index field-2">
+      <div>効果名</div>
+      <div>効果</div>
+    </div>
+    <div id="hit_fields" class="buff_field"></div>
+
+  <!-- <button onclick="test()" style="display:none;">test</button>-->
+    <button onclick="test()" style="display:none;">test</button>
+  </div>
+
+  <div id="tab_avoid" class="tab-content">
+    <div class="row">
+      <button class="btn 1" onclick="avoid_save('file')">回避セーブ</button>
+      <button class="btn 1" onclick="avoid_load('file')">回避ロード</button>
+    </div>
+
+    <div class="row">
+      <button class="btn 1" onclick="avoid_show()">表示/コピー</button>
+      <div>
+        <input class="chk 1" type="checkbox"  id="avoid_enable_separate"> 個別出力
+      </div>
+    </div>
+
+    <p id="avoid_text" class="text">　</P>
+
+    <hr>
+    <p style="margin:20px 0px"></p>
+    <div class="row">
+      <div class="row part" style="position: relative;">
+        <input class="fld 2 Z" id="avoid_value_field" placeholder="" >
+        <label class="lab fix" for="avoid_value_field" >固定値</label>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+      <button class="btn 3" onclick="avoid_add_field()">+</button>
+      <button class="btn 3" onclick="avoid_remove_field()">-</button>
+    </div>
+      <div class="field_index field-2">
+      <div>効果名</div>
+      <div>効果</div>
+    </div>
+
+    <div id="avoid_fields" class="buff_field"></div>
+  
+  </div>
+
+  <div id="tab_save" class="tab-content">
+    ファイルからセーブ・ロード
+    <div class="row">
+      <button class="btn 1" onclick="damage_save('file')">ダメージセーブ</button>
+      <button class="btn 1" onclick="damage_load('file')">ダメージロード</button>
+    </div>
+    <div class="row">
+      <button class="btn 1" onclick="hit_save('file')">命中セーブ</button>
+      <button class="btn 1" onclick="hit_load('file')">命中ロード</button>
+    </div>
+    <div class="row">
+      <button class="btn 1" onclick="avoid_save('file')">回避セーブ</button>
+      <button class="btn 1" onclick="avoid_load('file')">回避ロード</button>
+    </div>
+    <br>
+    <div class="row">
+      <button class="btn 2" onclick="all_save('file')">全体セーブ</button>
+      <button class="btn 2" onclick="all_load('file')">全体ロード</button>
+    </div>
+    <hr>
+    テキストからセーブ・ロード
+      <div class="row">
+        
+        <button class="btn 2" onclick="damage_save('text')">ダメージセーブ</button>
+        <button class="btn 2" onclick="hit_save('text')">命中セーブ</button>
+        <button class="btn 2" onclick="avoid_save('text')">回避セーブ</button>
+        
+      
+      </div>
+      <div class="row">
+        <button class="btn 2" onclick="all_save('text')">全体セーブ</button>
+      </div>
+      <div style="height:10px"></div>
+      <div class="row">
+        <button class="btn 2" onclick="load_from_text()">テキストからロード</button>  
+        <button class="btn 2" onclick="copy_data_field()">データテキストコピー
+      </div>
+      
+    
+    <textarea type="text" id="data_field" class="data_field" ></textarea>
+
+  </div>  
+
+  <div id="tab_hint" class="tab-content">
+    <div class="hint">
+      <p class="headline">セーブ・ロードについて</p>
+      　ダメージ、命中、回避タブについて、個別にセーブ・ロードできます。<br>
+      　異なる種類のセーブデータはロードできません。<br>
+      <br>
+      　データ管理タブから、すべてのタブをまとめてセーブ・ロードできます。<br>
+      　個別ロードは全体セーブデータをロードできません。逆もしかりです。<br>
+      <br>
+      　ファイルからセーブ・ロードでは、セーブデータのファイル出力、およびファイル読み込みができます。<br>
+      　テキストからセーブ・ロードでは、テキストフィールドにセーブデータの出力や、テキストフィールドに入力したセーブデータを読み込むことができます。<br>
+      　データテキストコピーから、テキストフィールドのセーブデータをコピーできます。<br>
+      <hr>
+      <p class="headline">入力欄について</p>
+      　武器名には、武器名を入力します。威力値・クリティカル値・固定値・命中力・回避力の入力欄には、バフを含んでいない場合の値を入力します。<br>
+      <br>
+      ・敵防護点あり:チェックを入れると敵防護点の欄が出現し、敵防護点を含めた出力ができます。<br>
+      ・半減:ダメージを半減します。(攻撃魔法の抵抗成功時など)<br>
+      ・クリティカル無し:クリティカル値が13となり、クリティカルが発生しなくなります。
+      <hr>
+      <p class="headline">バフ枠・ダイス種類について</p>
+      　各タブの+と-で、バフ枠を増減できます。<br>効果名にバフの名前を、効果に数値の変動量、ダイス効果(ダメージのみ)に効果の種類を入力します。チェックボックスで、バフの有効化、無効化を切り替えられます。<br>
+      <br>
+      ・固定値:数値の固定値を増減します。(マッスルベアー、全力攻撃など)<br>・C値増減:クリティカル値が増減します。(かいくぐり、クリティカルキャストなど)<br>・ダイス目増減(継続):威力値の出目が増減します。(必殺攻撃など)<br>・ダイス目増減(初回):威力値が増減します。クリティカル後に適用されません。(クリティカル・レイなど)<br>・ダイス目固定:片方のダイス目を固定します。(薬師道具セットなど)<br>
+      <br>
+      　上矢印のボタン・下矢印でバフ欄を入れ替えられます。<br>
+      <hr>
+      <p class="headline">表示/コピーについて</p>
+      　各タブの表示コピーで、ダイスコマンドを表示、およびコマンドをクリップボードにコピーします。そのままダイスコマンドとして貼り付けて使用可能です。<br>
+      <br>
+      ・個別出力:固定値・C値・命中力・回避力を、合算して出力する(例:2d6+6)か、個別に出力する(例:2d6+5+1+1-1)か選択できます<br>
+      <hr>
+      SW2.5 Dice Buff Helper web　　ver1.1.0<br>
+      2026/04/AA 公開<br>
+      <br>
+      @2026 そにうむ(sonium) All rights reserved.<br>
+      <br>
+      本ソフトウェアはグループSNE及び株式会社KADOKAWAが権利を有する『ソード・ワールド2.5』の二次創作です。<br>
+      <br>
+      許可のない無断転載・再配布を禁じます。<br>
+      Unauthorized reproduction or redistribution is prohibited.<br>
+      本ソフトウェアを使用して発生したいかなる損害も、著作者は責任を負いません。<br>
+      The author shall not be held liable for any damages arising from the use of this software.
+      <br>
+      <a href="https://bsky.app/profile/sonium3917.bsky.social">Bluesky:https://bsky.app/profile/sonium3917.bsky.social</a><br></bt>
+      <a href="https://sonium-trpg.booth.pm/items/8124850">Booth:https://sonium-trpg.booth.pm/items/8124850</a>
+    </div>
+  </div>
+  
+</div>
+
+
+<script>
+const Id = (id) => document.getElementById(id);
+Id("enemy_defence").style.visibility ="hidden";
+Id("lab_defence").style.visibility="hidden"
+var damage_field_count=0
+var hit_field_count=0;
+var avoid_field_count=0;
+
+var now_tab="damage";
+
+function showTab(tabId,btn) {
+  document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
+  document.getElementById(tabId).classList.add("active");
+
+  // ボタン状態
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+  if (btn) btn.classList.add("active");
+
+  if(tabId=="tab_damage"){
+    Id("damage_enable_separate").checked=Id(now_tab+"_enable_separate").checked;
+    now_tab="damage"
+  }
+  if(tabId=="tab_hit"){
+    Id("hit_enable_separate").checked=Id(now_tab+"_enable_separate").checked;
+    now_tab="hit"
+  }
+  if(tabId=="tab_avoid"){
+    Id("avoid_enable_separate").checked=Id(now_tab+"_enable_separate").checked;
+    now_tab="avoid"
+  }
+}
+
+showTab("tab_damage",null);
+
+async function handle_load_file(){
+  try {
+        // ファイル選択ダイアログを開く
+        const [fileHandle] = await window.showOpenFilePicker({
+            types: [{
+                description: 'Text Files',
+                accept: { 'application/json': ['.json'] }
+            }],
+            multiple: false, // 複数ファイル選択を許可しない
+            id:"damage"
+        });
+
+        // ファイルの内容を取得
+        const file = await fileHandle.getFile();
+        const content = await file.text(); // ファイルの内容をテキストとして取得
+
+        
+        //console.log('ファイルの内容:', content);
+        return content
+
+    } catch (err) {
+        console.error('ファイルの選択または読み込みがキャンセル/失敗しました:', err);
+        
+    }
+}
+
+function copy_to_clipboard(e,text){
+  var listener = function(e){
+  
+  e.clipboardData.setData("text/plain" , text);    
+  // 本来のイベントをキャンセル
+  e.preventDefault();
+  // 終わったら一応削除
+  document.removeEventListener("copy", listener);
+  }
+  // コピーのイベントが発生したときに、クリップボードに書き込むようにしておく
+document.addEventListener("copy" , listener);
+
+// コピー
+document.execCommand("copy");
+}
+
+function notify(message) {
+  const bar = document.getElementById("snackbar");
+
+  bar.textContent = message;
+  bar.classList.add("show");
+
+  setTimeout(() => {
+    bar.classList.remove("show");
+  }, 2000);
+}
+
+const container = document.getElementById('container');
+console.log(container)
+document.addEventListener('DOMContentLoaded', () => {
+  container.addEventListener('beforeinput', (e) => {
+      // 実際に触られたのが input 要素で、かつクラス名に "natural" を持っているか？
+      if (e.target.tagName === 'INPUT' && (e.target.classList.contains('N')||e.target.classList.contains('Z'))) {
+        const nextValue = e.target.value + (e.data || '');
+
+        
+        console.log(nextValue,e.target.classList)
+        if(e.target.classList.contains("N")){
+          regex=/^(0|[1-9]\d*)?$/
+        }
+        if(e.target.classList.contains("Z")){
+          regex=/^-?$|^-?(0|[1-9]\d*)$/
+        }
+        
+          if(/^0\d/.test(nextValue)){
+      e.target.value=nextValue.slice(1);
+    }
+    
+        if (e.data && nextValue=="-0") {
+          e.preventDefault();
+        }
+        if (e.data && /[^\x20-\x7e]/.test(e.data)) {
+          e.preventDefault();
+        }
+        
+        if (e.data && !regex.test(nextValue)) {
+                e.preventDefault();
+            }
+      }
+  });
+  container.addEventListener('input', (e) => {
+    if (e.target.tagName === 'INPUT' && (e.target.classList.contains('N')||e.target.classList.contains('Z'))) {
+      const target = e.target;
+      
+      // もし全角数字や変な文字が混じって確定されたら、その場で数字以外を消去
+      // replace(/[^-0-9]/g, '') で数字とマイナス以外を掃除
+      let val = target.value.replace(/[^-0-9]/g, '');
+
+      // さらに「05」などのパターンもここで最終チェックして直す
+      if (/^0\d+/.test(val)) {
+          val = Number(val).toString();
+      }
+
+      target.value = val;
+}})
+})
+
+////////////////////////
+
+
+function enable_enemy_defence(){
+  if(Id("enable_enemy_defence").checked==true){
+    Id("enemy_defence").style.visibility="visible";
+    Id("lab_defence").style.visibility="visible";
+    Id("lab_defence").style.opacity=1;
+  }
+  else{
+    Id("enemy_defence").style.visibility="hidden";
+    Id("lab_defence").style.visibility="hidden"
+    Id("lab_defence").style.opacity=0;
+  }
+}
+
+function damage_total(){
+  const separate_flag=Id("damage_enable_separate").checked;
+
+  var name_all=[]
+  var dice_temporary_mod=dice_first_mod=dice_value_fix=0;
+  if(separate_flag==true){
+    var fix_mod=critical_mod="";
+  }
+  else{
+    var fix_mod=critical_mod=0;
+  }
+  
+  if(damage_field_count<1){
+    console.log(fix_mod,critical_mod)
+    return [name_all,fix_mod,critical_mod,dice_temporary_mod,dice_first_mod,dice_value_fix];
+  }
+  const rows = document.querySelectorAll("#damage_row");
+  console.log(rows)
+  rows.forEach(row => {
+    const inputs = row.querySelectorAll("input, select");
+
+    
+    name= inputs[0].value,
+    effect=inputs[1].value,
+    type= inputs[2].value,
+    enable= inputs[3].checked
+    
+    //console.log(name,effect,type,enable);
+    if(enable==true){
+      name_all+=" "+[String(name)];
+
+      if(!(effect=="-"||effect=="")){
+      if(type==1){
+        if(separate_flag==true){
+          if(Number(effect)>=0){
+            fix_mod+="+"+String(effect);
+          }
+          else{
+            fix_mod+=String(effect);
+          }
+        }
+        else{
+          fix_mod+=Number(effect);
+        }
+      }
+      if(type==2){
+        if(separate_flag==true){
+          if(Number(effect)>=0){
+            critical_mod+="+"+String(effect);
+          }
+          else{
+            critical_mod+=String(effect);
+          }
+        }
+        else{
+          critical_mod+=Number(effect);
+        }
+      }
+      if(type==3){
+        dice_temporary_mod+=Number(effect);
+      }
+      if(type==4){
+        dice_first_mod+=Number(effect);
+      }
+      if(type==5){
+        dice_value_mod+=Number(effect);
+      }
+    }
+  }
+
+  });
+  console.log(name_all,fix_mod,critical_mod,dice_temporary_mod,dice_first_mod,dice_value_fix);
+  return [name_all,fix_mod,critical_mod,dice_temporary_mod,dice_first_mod,dice_value_fix];
+}
+
+function damage_show(e){
+
+  const separate_flag=Id("damage_enable_separate").checked;
+  const enemy_defence_flag=Id("enable_enemy_defence").checked;
+  const no_critical_flag=Id("enable_no_critical").checked;
+  var weapon_name=Id("weapon_name_field").value;
+  if (!weapon_name.startsWith("〈") &&!weapon_name.endsWith("〉")){
+    weapon_name="〈"+weapon_name+"〉";
+  }
+
+  var impact_value=Id("impact_value_field").value;
+  if(impact_value===""||Number.isNaN(impact_value)){
+    impact_value=0
+  }
+
+  var critical_value=Id("critical_value_field").value;
+  if(critical_value===""||Number.isNaN(critical_value)){
+    critical_value=13
+  }
+
+  var fix_value=Id("damage_fix_value_field").value;
+  if(fix_value===""||Number.isNaN(fix_value)){
+    fix_value=0
+  }
+  var half="";
+  if(Id("enable_half_damage").checked==true){
+    half="h"
+  }
+
+  var [name_all,fix_mod,critical_mod,dice_temporary_mod,dice_first_mod,dice_value_fix]=damage_total();
+
+  
+  const impact=impact_value;
+  if(separate_flag==true){
+    fix=String(fix_value)+String(fix_mod);
+  }
+  else{
+    fix=Number(fix_value)+Number(fix_mod);
+  }
+  if(separate_flag==true){
+    critical=String(critical_value)+String(critical_mod);
+    if(no_critical_flag==true){
+      critical="13";
+    }
+  }
+  else{
+    
+    critical=Number(critical_value)+Number(critical_mod);
+    if(no_critical_flag==true){
+      critical=13;
+    }
+  }
+
+  if (dice_temporary_mod>0){
+    dice_temporary_mod="#+"+String(dice_temporary_mod);
+  }
+  else if (dice_temporary_mod<0){
+    dice_temporary_mod="#"+String(dice_temporary_mod);
+  }
+  else{
+   dice_temporary_mod="";
+  }
+    
+  if (dice_first_mod>0){
+    dice_first_mod="$+"+String(dice_first_mod);
+  }
+  else if (dice_first_mod<0){
+    dice_first_mod="$"+String(dice_first_mod);
+  }
+  else{
+    dice_first_mod="";
+  }
+
+  effect_name_all=name_all;
+
+  var enemy_defence_text="";
+  
+  if(enemy_defence_flag==true&&!(Id("enemy_defence").value==""||Number.isNaN(Id("enemy_defence").value))){
+    enemy_defence_text="(敵防護点込み)"
+     if (separate_flag==true){
+        fix+="-"+String(enemy_defence.value)
+      }
+      else{
+                fix-=Number(enemy_defence.value)
+              }
+  }
+
+  fix_plus_minus=""
+  mod_plus_minus=""
+  if (separate_flag==true){
+    if (fix.startsWith("-")){
+      fix_plus_minus=""
+    }
+    else{
+      fix_plus_minus="+"
+    }
+  }
+  else{
+    if (fix>=0){
+      fix_plus_minus="+"
+    }
+    else
+      fix_plus_minus=""
+    }
+    
+  text=half+"k"+impact+"[("+critical+")]"+fix_plus_minus+fix+dice_temporary_mod+dice_first_mod+" ダメージ"+enemy_defence_text+"／"+weapon_name+" "+effect_name_all;
+  Id("damage_text").textContent=text;
+  copy_to_clipboard(e,text)
+  notify("Copied to clipboard!");
+}
+
+function damage_save(mode){
+  try{
+  var data={save_type:"damage",
+            weapon_name:Id("weapon_name_field").value,
+            impact_value:Id("impact_value_field").value,
+            critical_value:Id("critical_value_field").value,
+            fix_value:Id("damage_fix_value_field").value,
+            effects:[]
+          }
+  
+  for(let i=1;i<=damage_field_count;i++){
+    data.effects.push({
+        effect_name:Id("damage_effect_name_"+1).value,
+        effect:Id("damage_effect_"+i).value,
+        type:Id("damage_select_"+i).value,
+        enabled:Id("damage_enable_"+i).checked
+    })
+  }
+  data=JSON.stringify(data,null,2);
+
+  if(mode=="file"){
+  const blob=new Blob([data],{type:"application/json"})
+
+  const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = "SW2.5dbh_damage.json"; // ファイル名
+    
+    // 5. リンクを自動クリックしてダウンロード開始
+    document.body.appendChild(a);
+    a.click();
+    
+    // 6. 後片付け
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+  else if(mode=="text"){
+    Id("data_field").value=data;
+  }
+    notify("Save complete!")
+}
+catch(err){
+  
+}
+}
+
+async function damage_load(mode){
+  try{
+    if(mode=="file"){
+    data=JSON.parse(await handle_load_file());
+
+    }
+    else if(mode=="text"){
+    data=JSON.parse(Id("data_field").value);
+    }
+        console.log(data);
+    if(data.save_type=="damage"){
+      console.log(data.weapon_name)
+
+      const tem_count=damage_field_count
+      for(let j=0;j<tem_count;j++){
+        damage_remove_field()
+      }
+
+      Id("weapon_name_field").value=data.weapon_name;
+      Id("impact_value_field").value=data.impact_value;
+      Id("critical_value_field").value=data.critical_value;
+      Id("damage_fix_value_field").value=data.fix_value;
+
+      effect_count=data.effects.length;
+      console.log(effect_count);
+
+      for(let i=1;i<=effect_count;i++){
+        damage_add_field();
+        //Id("damage_felds.row[i]").value
+        
+        Id("damage_effect_name_"+i).value=data.effects[i-1].effect_name;
+        Id("damage_effect_"+i).value=data.effects[i-1].effect;
+        Id("damage_select_"+i).value=data.effects[i-1].type;
+        Id("damage_enable_"+i).checked=data.effects[i-1].enabled;
+
+      }
+      notify("Load complete!");
+    }
+    else{
+      console.log("not damage");
+      notify("ERROR：Not a damege file!");
+    }
+
+
+  }
+  catch(err){
+    console.log(err);
+    notify("ERROR：Loading error!");
+  } 
+}
+
+function damage_add_field(){
+
+  damage_field_count++;
+  console.log(damage_field_count)
+  const row = document.createElement("div");
+  row.className = "table field-1";
+  row.id = "damage_row";
+
+  // テキスト
+  const text = document.createElement("input");
+  text.type = "text";
+  text.placeholder = "効果名";
+  text.className="fld 3";
+  text.id="damage_effect_name_"+damage_field_count;
+
+  // 数値
+  const effect = document.createElement("input");
+  effect.type = "effect";
+  effect.placeholder = "効果";
+  effect.className="fld 3 Z";
+  effect.id="damage_effect_"+damage_field_count;
+
+  // ドロップダウン
+  const select = document.createElement("select");
+  select.className="drd 3";
+  select.id="damage_select_"+damage_field_count;
+
+  const opt0 = document.createElement("option");
+  opt0.value = "0";
+  opt0.textContent = "ダイス効果";
+
+  const opt1 = document.createElement("option");
+  opt1.value = "1";
+  opt1.textContent = "固定値増減";
+
+  const opt2 = document.createElement("option");
+  opt2.value = "2";
+  opt2.textContent = "C値増減";
+
+  const opt3 = document.createElement("option");
+  opt3.value = "3";
+  opt3.textContent = "ダイス目増減(継続) #";
+
+  const opt4 = document.createElement("option");
+  opt4.value = "4";
+  opt4.textContent = "ダイス目増減(初回) $";
+
+  const opt5 = document.createElement("option");
+  opt5.value = "5";
+  opt5.textContent = "ダイス目固定 sf";
+
+
+  select.appendChild(opt1);
+  select.appendChild(opt2);
+  select.appendChild(opt3);
+  select.appendChild(opt4);
+  select.appendChild(opt5);
+
+  // チェックボックス
+  const enable= document.createElement("input");
+  enable.type = "checkbox";
+  enable.className="chk 3";
+  enable.id="damage_enable_"+damage_field_count;
+
+  const button_up=document.createElement("button");
+  button_up.innerText = "↑";
+  button_up.className="btn 3";
+  button_up.onclick=function(e) {
+  const row = e.target.parentElement;
+  const prev = row.previousElementSibling;
+  
+
+  if (prev) {
+    row.parentNode.insertBefore(row, prev);
+  }
+};
+
+const button_down=document.createElement("button");
+  button_down.innerText = "↓";
+  button_down.className="btn 3";
+  button_down.onclick=function(e) {
+  const row = e.target.parentElement;
+  const next = row.nextElementSibling;
+
+  if (next) {
+    row.parentNode.insertBefore(next, row);
+  }
+};
+
+
+  // まとめる
+  row.appendChild(text);
+  row.appendChild(effect);
+  row.appendChild(select);
+  row.appendChild(enable);
+  row.append(button_up)
+  row.append(button_down)
+
+
+  Id("damage_fields").appendChild(row);
+}
+
+function damage_remove_field(){
+  const container = Id("damage_fields");
+
+  if (container.lastChild&&(damage_field_count>0)) {
+    container.removeChild(container.lastElementChild);
+  }
+  if(damage_field_count>0){
+    damage_field_count--
+  }
+  console.log(damage_field_count)
+}
+
+function damage_field_change(mode,index){
+console.log(mode)
+}
+////////////////////////
+
+function hit_total(){
+   const separate_flag=Id("hit_enable_separate").checked;
+
+  var name_all=[]
+  
+  if(separate_flag==true){
+    var fix_mod="";
+  }
+  else{
+    var fix_mod=0;
+  }
+
+  if(hit_field_count<1){
+    console.log(fix_mod)
+    return [name_all,fix_mod];
+  }
+  const rows = document.querySelectorAll("#hit_row");
+  
+  rows.forEach(row => {
+    const inputs = row.querySelectorAll("input, select");
+
+    name= inputs[0].value,
+    effect=inputs[1].value,
+    enable= inputs[2].checked
+    
+    //console.log(name,effect,type,enable);
+    if(enable==true){
+      name_all+=" "+[String(name)];
+      if(!(effect=="-"||effect=="")){
+      if(separate_flag==true){
+        if(Number(effect)>=0){
+          fix_mod+="+"+String(effect);
+        }
+        else{
+          fix_mod+=String(effect);
+        }
+      }
+      else{
+        fix_mod+=Number(effect);
+      }
+    }
+  }
+  });
+  console.log(name_all,fix_mod);
+  return [name_all,fix_mod];
+
+}
+
+function hit_show(e){
+
+  const separate_flag=Id("hit_enable_separate").checked;
+
+  var fix_value=Id("hit_value_field").value;
+  if(fix_value===""||Number.isNaN(fix_value)){
+    fix_value=0
+  }
+
+  var [name_all,fix_mod]=hit_total();
+
+  if(separate_flag==true){
+    fix=String(fix_value)+String(fix_mod);
+  }
+  else{
+    fix=Number(fix_value)+Number(fix_mod);
+  }
+  
+  effect_name_all=name_all;
+
+  var enemy_defence_text=""; 
+
+  fix_plus_minus=""
+  mod_plus_minus=""
+  if (separate_flag==true){
+    if (fix.startsWith("-")){
+      fix_plus_minus=""
+    }
+    else{
+      fix_plus_minus="+"
+    }
+  }
+  else{
+    if (fix>=0){
+      fix_plus_minus="+"
+    }
+    else
+      fix_plus_minus=""
+    }
+    text="2d6"+fix_plus_minus+fix+" 命中力／"+effect_name_all;
+    Id("hit_text").textContent=text;
+    copy_to_clipboard(e,text)
+    notify("Copied to clipboard!");
+}
+
+function hit_save(mode){
+  var data={save_type:"hit",
+            fix_value:Id("hit_value_field").value,
+            effects:[]
+          }
+  
+  for(let i=1;i<=hit_field_count;i++){
+    data.effects.push({
+        effect_name:Id("hit_effect_name_"+1).value,
+        effect:Id("hit_effect_"+i).value,
+        enabled:Id("hit_enable_"+i).checked
+    })
+  }
+  data=JSON.stringify(data,null,2);
+if(mode=="file"){
+  const blob=new Blob([data],{type:"application/json"})
+
+  const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = "SW2.5dbh_hit.json"; // ファイル名
+    
+    // 5. リンクを自動クリックしてダウンロード開始
+    document.body.appendChild(a);
+    a.click();
+    
+    // 6. 後片付け
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    }
+  else if(mode=="text"){
+    Id("data_field").value=data;
+  }
+    notify("Save complete!");
+}
+
+async function hit_load(mode){
+  try{
+    if(mode=="file"){
+    data=JSON.parse(await handle_load_file());
+    }
+    else if(mode=="text"){
+    data=JSON.parse(Id("data_field").value);
+    }
+    console.log(data);
+
+    if(data.save_type=="hit"){
+
+      const tem_count=hit_field_count
+      for(let i=0;i<tem_count;i++){
+        hit_remove_field()
+      }
+
+      Id("hit_value_field").value=data.fix_value;
+
+      effect_count=data.effects.length;
+      console.log(effect_count);
+
+      for(let i=1;i<=effect_count;i++){
+       hit_add_field();
+        //Id("damage_felds.row[i]").value
+        
+        Id("hit_effect_name_"+i).value=data.effects[i-1].effect_name;
+        Id("hit_effect_"+i).value=data.effects[i-1].effect;
+        Id("hit_enable_"+i).checked=data.effects[i-1].enabled;
+        notify("Load complete!");
+      }
+    }
+    else{
+      console.log("not hit")
+      notify("ERROR：Not a hit data!")
+    }
+
+
+  }
+  catch(err){
+    console.log(err)
+    notify("ERROR：Loading error!")
+  } 
+}
+
+function hit_add_field(){
+
+  hit_field_count++;
+  console.log(hit_field_count)
+  const row = document.createElement("div");
+  row.className = "table field-2";
+  row.id = "hit_row";
+
+  // テキスト
+  const text = document.createElement("input");
+  text.type = "text";
+  text.placeholder = "効果名";
+  text.className="fld 3";
+  text.id="hit_effect_name_"+hit_field_count;
+
+  // 数値
+  const effect = document.createElement("input");
+  effect.type = "effect";
+  effect.placeholder = "効果";
+  effect.className="fld 3 Z";
+  effect.id="hit_effect_"+hit_field_count;
+
+  
+  // チェックボックス
+  const enable= document.createElement("input");
+  enable.type = "checkbox";
+  enable.className="chk 3";
+  enable.id="hit_enable_"+hit_field_count;
+
+    const button_up=document.createElement("button");
+  button_up.innerText = "↑";
+  button_up.className="btn 3";
+  button_up.onclick=function(e) {
+  const row = e.target.parentElement;
+  const prev = row.previousElementSibling;
+
+  if (prev) {
+    row.parentNode.insertBefore(row, prev);
+  }
+};
+
+const button_down=document.createElement("button");
+  button_down.innerText = "↓";
+  button_down.className="btn 3";
+  button_down.onclick=function(e) {
+  const row = e.target.parentElement;
+  const next = row.nextElementSibling;
+
+  if (next) {
+    row.parentNode.insertBefore(next, row);
+  }
+};
+
+  // まとめる
+  row.appendChild(text);
+  row.appendChild(effect);
+  row.appendChild(enable);
+  row.append(button_up)
+  row.append(button_down)
+
+  Id("hit_fields").appendChild(row);
+}
+
+function hit_remove_field(){
+  const container = Id("hit_fields");
+
+  if (container.lastChild) {
+    container.removeChild(container.lastElementChild);
+  }
+  if(hit_field_count>0){
+    hit_field_count--
+  }
+  console.log(hit_field_count)
+}
+////////////////////////
+
+function avoid_total(){
+   const separate_flag=Id("avoid_enable_separate").checked;
+
+  var name_all=[]
+  
+  if(separate_flag==true){
+    var fix_mod="";
+  }
+  else{
+    var fix_mod=0;
+  }
+
+  if(avoid_field_count<1){
+    console.log(fix_mod)
+    return [name_all,fix_mod];
+  }
+  const rows = document.querySelectorAll("#avoid_row");
+  rows.forEach(row => {
+    const inputs = row.querySelectorAll("input, select");
+
+    name= inputs[0].value,
+    effect=inputs[1].value,
+    enable= inputs[2].checked
+    
+    //console.log(name,effect,type,enable);
+    if(enable==true){
+      name_all+=" "+[String(name)];
+      if(!(effect=="-"||effect=="")){
+      if(separate_flag==true){
+        if(Number(effect)>=0){
+          fix_mod+="+"+String(effect);
+        }
+        else{
+          fix_mod+=String(effect);
+        }
+      }
+      else{
+        fix_mod+=Number(effect);
+      }
+    }
+  }
+  });
+  console.log(name_all,fix_mod);
+  return [name_all,fix_mod];
+
+}
+
+function avoid_show(e){
+
+  const separate_flag=Id("avoid_enable_separate").checked;
+
+  var fix_value=Id("avoid_value_field").value;
+  if(fix_value===""||Number.isNaN(fix_value)){
+    fix_value=0
+  }
+
+  var [name_all,fix_mod]=avoid_total();
+
+  if(separate_flag==true){
+    fix=String(fix_value)+String(fix_mod);
+  }
+  else{
+    fix=Number(fix_value)+Number(fix_mod);
+  }
+  
+  effect_name_all=name_all;
+
+  var enemy_defence_text=""; 
+
+  fix_plus_minus=""
+  mod_plus_minus=""
+  if (separate_flag==true){
+    if (fix.startsWith("-")){
+      fix_plus_minus=""
+    }
+    else{
+      fix_plus_minus="+"
+    }
+  }
+  else{
+    if (fix>=0){
+      fix_plus_minus="+"
+    }
+    else
+      fix_plus_minus=""
+    }
+  
+    text="2d6"+fix_plus_minus+fix+" 回避力／"+effect_name_all;
+    Id("avoid_text").textContent=text;
+    copy_to_clipboard(e,text)
+    notify("Copied to clipboard!");
+  }
+
+function avoid_save(mode){
+  var data={save_type:"avoid",
+            fix_value:Id("avoid_value_field").value,
+            effects:[]
+          }
+  
+  for(let i=1;i<=avoid_field_count;i++){
+    data.effects.push({
+        effect_name:Id("avoid_effect_name_"+1).value,
+        effect:Id("avoid_effect_"+i).value,
+        enabled:Id("avoid_enable_"+i).checked
+    })
+  }
+  data=JSON.stringify(data,null,2);
+  if(mode=="file"){
+  const blob=new Blob([data],{type:"application/json"})
+
+  const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = "SW2.5dbh_avoid.json"; // ファイル名
+    
+    // 5. リンクを自動クリックしてダウンロード開始
+    document.body.appendChild(a);
+    a.click();
+    
+    // 6. 後片付け
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+  else if(mode=="text"){
+    Id("data_field").value=data;
+  }
+    notify("Copied to clipboard!");
+
+}
+
+async function avoid_load(mode){
+  try{
+    if(mode=="file"){
+    data=JSON.parse(await handle_load_file());
+    }
+    else if(mode=="text"){
+    data=JSON.parse(Id("data_field").value);
+    }
+    console.log(data);
+
+    if(data.save_type=="avoid"){
+
+      const tem_count=avoid_field_count
+      for(let i=0;i<tem_count;i++){
+        avoid_remove_field()
+      }
+
+      Id("avoid_value_field").value=data.fix_value;
+
+      effect_count=data.effects.length;
+      console.log(effect_count);
+
+      for(let i=1;i<=effect_count;i++){
+       avoid_add_field();
+        //Id("damage_felds.row[i]").value
+        
+        Id("avoid_effect_name_"+i).value=data.effects[i-1].effect_name;
+        Id("avoid_effect_"+i).value=data.effects[i-1].effect;
+        Id("avoid_enable_"+i).checked=data.effects[i-1].enabled;
+
+      }
+      notify("Load complete!");
+    }
+    else{
+      console.log("not avoid")
+      notify("ERROR：Not a avoid file!");
+    }
+
+
+  }
+  catch(err){
+    console.log(err)
+    notify("ERROR：Loading error!")
+  } 
+}
+
+function avoid_add_field(){
+
+  avoid_field_count++;
+  console.log(avoid_field_count)
+  const row = document.createElement("div");
+  row.className = "table field-2";
+  row.id = "avoid_row";
+
+  // テキスト
+  const text = document.createElement("input");
+  text.type = "text";
+  text.placeholder = "効果名";
+  text.className="fld 3";
+  text.id="avoid_effect_name_"+avoid_field_count;
+
+  // 数値
+  const effect = document.createElement("input");
+  effect.type = "effect";
+  effect.placeholder = "効果";
+  effect.className="fld 3 Z";
+  effect.id="avoid_effect_"+avoid_field_count;
+
+  
+  // チェックボックス
+  const enable= document.createElement("input");
+  enable.type = "checkbox";
+  enable.className="chk 3";
+  enable.id="avoid_enable_"+avoid_field_count;
+
+    const button_up=document.createElement("button");
+  button_up.innerText = "↑";
+  button_up.className="btn 3";
+  button_up.onclick=function(e) {
+  const row = e.target.parentElement;
+  const prev = row.previousElementSibling;
+
+  if (prev) {
+    row.parentNode.insertBefore(row, prev);
+  }
+};
+
+const button_down=document.createElement("button");
+  button_down.innerText = "↓";
+  button_down.className="btn 3";
+  button_down.onclick=function(e) {
+  const row = e.target.parentElement;
+  const next = row.nextElementSibling;
+
+  if (next) {
+    row.parentNode.insertBefore(next, row);
+  }
+};
+
+  // まとめる
+  row.appendChild(text);
+  row.appendChild(effect);
+  row.appendChild(enable);
+  row.append(button_up)
+  row.append(button_down)
+
+  Id("avoid_fields").appendChild(row);
+}
+
+function avoid_remove_field(){
+  const container = Id("avoid_fields");
+
+  if (container.lastChild) {
+    container.removeChild(container.lastElementChild);
+  }
+  if(avoid_field_count>0){
+    avoid_field_count--
+  }
+  console.log(avoid_field_count)
+}
+////////////////////////
+
+function all_save(mode){
+  var data={save_type:"all",
+           "impact":{
+              weapon_name:Id("weapon_name_field").value,
+              impact_value:Id("impact_value_field").value,
+              critical_value:Id("critical_value_field").value,
+              fix_value:Id("damage_fix_value_field").value,
+              effects:[]},
+            "hit":{ 
+              fix_value:Id("hit_value_field").value,
+              effects:[]},
+            "avoid":{
+              fix_value:Id("avoid_value_field").value,
+              effects:[]
+            }
+
+          }
+  
+  for(let i=1;i<=damage_field_count;i++){
+    data.impact.effects.push({
+        effect_name:Id("damage_effect_name_"+1).value,
+        effect:Id("damage_effect_"+i).value,
+        type:Id("damage_select_"+i).value,
+        enabled:Id("damage_enable_"+i).checked
+    })
+  }
+  for(let i=1;i<=hit_field_count;i++){
+    data.hit.effects.push({
+        effect_name:Id("hit_effect_name_"+1).value,
+        effect:Id("hit_effect_"+i).value,
+        enabled:Id("hit_enable_"+i).checked
+    })
+  }
+  for(let i=1;i<=avoid_field_count;i++){
+    data.avoid.effects.push({
+        effect_name:Id("avoid_effect_name_"+1).value,
+        effect:Id("avoid_effect_"+i).value,
+        enabled:Id("avoid_enable_"+i).checked
+    })
+  }
+
+  data=JSON.stringify(data,null,2);
+  if(mode=="file"){
+  const blob=new Blob([data],{type:"application/json"})
+
+  const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = "SW2.5dbh_all.json"; // ファイル名
+    
+    // 5. リンクを自動クリックしてダウンロード開始
+    document.body.appendChild(a);
+    a.click();
+    
+    // 6. 後片付け
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+    else if(mode=="text"){
+    Id("data_field").value=data;
+  }
+  notify("Save complete!")
+
+}
+
+async function all_load(mode){
+  try{
+    if(mode=="file"){
+    data=JSON.parse(await handle_load_file());
+    }
+    else if(mode=="text"){
+    data=JSON.parse(Id("data_field").value);
+    }
+    console.log(data);
+
+    if(data.save_type=="all"){
+      console.log(data.weapon_name)
+
+      damage_data=data.impact;
+      hit_data=data.hit;
+      avoid_data=data.avoid
+
+      const damage_tem_count=damage_field_count;
+      const hit_tem_count=hit_field_count;
+      const avoid_tem_count=avoid_field_count;
+      for(let j=0;j<damage_tem_count;j++){
+        damage_remove_field()
+      }
+      for(let j=0;j<hit_tem_count;j++){
+        hit_remove_field()
+      }
+      for(let j=0;j<avoid_tem_count;j++){
+        avoid_remove_field()
+      }
+
+      Id("weapon_name_field").value=damage_data.weapon_name;
+      Id("impact_value_field").value=damage_data.impact_value;
+      Id("critical_value_field").value=damage_data.critical_value;
+      Id("damage_fix_value_field").value=damage_data.fix_value;
+
+      effect_count=damage_data.effects.length;
+      console.log(effect_count);
+
+      for(let i=1;i<=effect_count;i++){
+        damage_add_field();
+        //Id("damage_felds.row[i]").value
+        
+        Id("damage_effect_name_"+i).value=damage_data.effects[i-1].effect_name;
+        Id("damage_effect_"+i).value=damage_data.effects[i-1].effect;
+        Id("damage_select_"+i).value=damage_data.effects[i-1].type;
+        Id("damage_enable_"+i).checked=damage_data.effects[i-1].enabled;
+      }
+      
+      Id("hit_value_field").value=hit_data.fix_value;
+
+      effect_count=hit_data.effects.length;
+      console.log(effect_count);
+
+      for(let i=1;i<=effect_count;i++){
+       hit_add_field();
+        //Id("damage_felds.row[i]").value
+        
+        Id("hit_effect_name_"+i).value=hit_data.effects[i-1].effect_name;
+        Id("hit_effect_"+i).value=hit_data.effects[i-1].effect;
+        Id("hit_enable_"+i).checked=hit_data.effects[i-1].enabled;
+        }
+      
+      Id("avoid_value_field").value=avoid_data.fix_value;
+        effect_count=avoid_data.effects.length;
+      console.log(effect_count);
+
+      for(let i=1;i<=effect_count;i++){
+       avoid_add_field();
+        //Id("damage_felds.row[i]").value
+        
+        Id("avoid_effect_name_"+i).value=avoid_data.effects[i-1].effect_name;
+        Id("avoid_effect_"+i).value=avoid_data.effects[i-1].effect;
+        Id("avoid_enable_"+i).checked=avoid_data.effects[i-1].enabled;
+
+      }
+      notify("Load complete!")
+      }
+    else{
+      console.log("not damage")
+      notify("ERROR：Not a all file!")
+    }
+
+
+  }
+  catch(err){
+    console.log(err)
+    notify("ERROR：Loading error!")
+  } 
+}
+
+function load_from_text(){
+  data=JSON.parse(Id("data_field").value);
+  
+  data_type=data.save_type;
+  console.log(data,data_type)
+  if(data_type=="damage"){
+    damage_load("text");
+  }
+  else if(data_type=="hit"){
+    hit_load("text");
+  }
+  else if(data_type=="avoid"){
+    avoid_load("text");
+  }
+  else if(data_type=="all"){
+    all_load("text");
+  }
+  else{
+    notify("Loading error!")
+  }
+}
+function copy_data_field(e){
+  copy_to_clipboard(e,Id("data_field").value);
+  notify("Data copied!")
+}
+
+function test(){
+  const text=Id("weapon_name_field").value;
+  console.log(text)
+  Id("damage_text").textContent=text
+  damage_total()
+}
+</script>
+
+<style>
+
+* {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+  font-family: sans-serif;
+}
+body {
+  overflow-x: hidden;
+}
+
+html, body {
+overflow: hidden;
+}
+@media (max-width: 650px) {
+  .row {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .container {
+  transform: scale(0.65);
+  transform-origin: top left;
+}
+
+}
+#header {
+  background: linear-gradient(rgb(157, 157, 255),#fff);
+  width: 1000%;
+  
+  padding:10px;
+  opacity: 1;
+}
+.tab_bar{
+  display: flex; /* flexbox */
+  flex-wrap: nowrap; /* 折返し指定 */
+  width:600px;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+
+.row {
+  
+  display: grid;
+  grid-template-columns: 150px 150px 150px 150px;
+  gap:20px;
+  margin:10px 20px;
+  align-items: center;
+}
+.row.part{
+  gap:0px;
+  margin:0px 0px;
+}
+.table{
+   display: grid;
+  grid-template-columns: 120px 120px 120px 30px 30px 30px;
+  gap:5px;
+  margin:20px 20px;
+  align-items: center;
+  
+}
+.table.field-1{
+grid-template-columns: 155px 95px 155px 35px 25px 25px;
+
+}
+.field_index{
+   display: grid;
+  
+  gap:5px;
+  margin:0px 20px;
+  align-items: center;
+  
+}
+.field_index.field-1{
+grid-template-columns: 155px 95px 155px 35px 35px 35px;
+}
+.table.field-2{
+grid-template-columns: 155px 95px 35px 25px 25px;
+}
+.field_index.field-2{
+grid-template-columns: 155px 95px 35px 35px 35px;
+}
+.main_content{
+    display: flex;
+  gap: 10px;
+}
+.text{
+  margin:10px;
+}
+
+.tab-btn{
+  width:100px;
+  height:60px;
+  border: 2px solid #88f;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  margin:2px
+}
+.tab-btn.active {
+  border: 2px solid #44f;
+  background: #ccc;
+}
+.tab-btn:hover{
+  background: #aaa;
+}
+
+.btn{
+ border: 2px solid #88f;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  height:30px;
+}
+.btn:hover{
+  background: #aaa;
+
+}
+
+.fld{
+   border: 2px solid #88f;
+  border-radius: 8px;
+  background: #fff;
+  height:30px;
+}
+.fld::placeholder{
+  color: gray;
+}
+.drd{
+   border: 2px solid #88f;
+  border-radius: 8px;
+  background: #fff;
+  height:30px;
+  cursor: pointer;
+}
+.chk{
+   border: 2px solid #88f;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  margin:1px 1px 1px 1px;
+}
+/* ラベルをプレースホルダーの位置に配置 */
+.lab {
+  position: absolute;
+  left: 3px;
+  top: 1px;
+  color: gray;
+  pointer-events: none; /* ラベル越しにクリックできるようにする */
+  transition: all 0.3s ease;
+}
+
+.buff_field{
+  height: 350px;
+  width:630px;
+  overflow: auto;
+
+}
+
+.data_field{
+  height:200px;
+  width:500px;
+  margin:5px
+}
+
+.hint{
+    height: 600px;
+  width:90%;
+  overflow: auto;
+}
+.headline{
+  font-size: 25px; /* 絶対単位 */
+}
+/* 1. 入力欄にフォーカスした時 (:focus)
+  2. または、文字が入っていてプレースホルダーが非表示の時 (:not(:placeholder-shown))
+  にラベルを上に移動させる
+*/
+input:focus + .lab,
+input:not(:placeholder-shown) + .lab {
+  top: -20px;
+  left: 5px;
+  font-size: 12px;
+  color: #007bff;
+}
+
+#snackbar {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  
+  background: #333;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+
+  opacity: 0;
+  transition: 0.3s;
+}
+
+#snackbar.show {
+  opacity: 1;
+}
+
+</style>
