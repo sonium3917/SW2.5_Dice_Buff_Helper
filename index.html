@@ -5,285 +5,299 @@
   <title>SW2.5 Dice Buff Helper</title>
   <link rel="shortcut icon" href="SW2.5_Dice_Buff_Helper_icon.ico">
 </head>
+<body>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <div class="container" id="container">
+    <header id="header">
+    <h3>SW2.5 Dice Buff Helper</h3>
+  </header>
 
-<div class="container" id="container">
-  <header id="header">
-  <h3>SW2.5 Dice Buff Helper</h3>
- </header>
+    <div id="snackbar"></div>
+      <div class="tab_bar">
+        <button id="damage_tab-btn" class="tab-btn" onclick="showTab('tab_damage',this)">ダメージ</button>
+        <button id="hit_tab-btn" class="tab-btn" onclick="showTab('tab_hit',this)">命中</button>
+        <button id="avoid_tab-btn" class="tab-btn" onclick="showTab('tab_avoid',this)">回避</button>
+        <button id="data_tab-btn" class="tab-btn" onclick="showTab('tab_save',this)">データ管理</button>
+        <button id="hint_tab-btn" class="tab-btn" onclick="showTab('tab_hint',this)">ヒント</button>
 
-  <div id="snackbar"></div>
-    <div class="tab_bar">
-      <button class="tab-btn" onclick="showTab('tab_damage',this)">ダメージ</button>
-      <button class="tab-btn" onclick="showTab('tab_hit',this)">命中</button>
-      <button class="tab-btn" onclick="showTab('tab_avoid',this)">回避</button>
-      <button class="tab-btn" onclick="showTab('tab_save',this)">データ管理</button>
-      <button class="tab-btn" onclick="showTab('tab_hint',this)">ヒント</button>
-
-    </div>
-  <hr>
-  <div id="tab_damage" class="tab-content">
-    <div class="row">
-      <button class="btn 1" onclick="damage_save('file')">ダメージセーブ</button>
-      <button class="btn 1" onclick="damage_load('file')">ダメージロード</button>
-    </div>
-
-    <div class="row">
-      <button class="btn 1" onclick="damage_show()">表示/コピー</button>
-      <div>
-        <input type="checkbox" class="chk 1" id="damage_enable_separate"> 個別出力
       </div>
-
-    </div>
-
-    <p id="damage_text" class="text">　</P>
-
     <hr>
-
-    <p style="margin:20px 0px"></p>
-
-    </p>
-    <div class="row" style="position: relative;">
-      <div class="row part" style="position: relative;">
-        <input id="weapon_name_field"  class="fld 2" placeholder="">
-        <label class="lab weapon" for="weapon_name_field">武器名</label>
+    <div id="tab_damage" class="tab-content">
+      <div class="row">
+        <button class="btn 1" onclick="damage_save('file')">ダメージセーブ</button>
+        <button class="btn 1" onclick="damage_load('file')">ダメージロード</button>
       </div>
+
+      <div class="row">
+        <button class="btn 1" onclick="damage_show()">表示/コピー</button>
+        <div>
+          <input type="checkbox" class="chk 1" id="damage_enable_separate"> 個別出力
+        </div>
+
+      </div>
+
+      <p id="damage_text" class="text">　</P>
+
+      <hr>
+
+      <p style="margin:20px 0px"></p>
+
+      </p>
+      <div class="row change">
+        <div id="weapon_buttons" ></div>
+      </div>
+      <div class="row" style="position: relative;">
+        
+        <div class="row part" style="position: relative;">
+          <input id="weapon_name_field"  class="fld 2" placeholder="">
+          <label class="lab weapon" for="weapon_name_field">武器名</label>
+        </div>
+
+        
+        <div>
+          <input type="checkbox" onclick=enable_enemy_defence() class="chk 2" id="enable_enemy_defence"> 敵防護点あり
+        </div>
+        
+        <div class="row part" style="position: relative;">
+          <input id="enemy_defence"  class="fld 2 Z" placeholder="">
+          <label id="lab_defence" class="lab defence" for="impact_name_field">敵防護点</label>
+        </div>
+      </div>
+      <p style="margin:20px 0px"></p>
+      <div class="row">
+        
+        <div class="row part" style="position: relative;">
+          <input id="impact_value_field"  class="fld 2 N"  placeholder="" >
+          <label class="lab impact" for="impact_name_field">威力値</label>
+        </div>
+        <div class="row part" style="position: relative;">
+          <input id="critical_value_field"  class="fld 2 N" placeholder="">
+          <label class="lab critical" for="impact_name_field">クリティカル値</label>
+        </div>
+        <div class="row part" style="position: relative;">
+          <input id="damage_fix_value_field"  class="fld 2 Z" placeholder="" >
+          <label class="lab fix" for="impact_name_field">固定値</label>
+        </div>
+        
+      </div>
+      <div class="row">
+        <div >
+          <input type="checkbox" class="chk 2" id="enable_half_damage"> ダメージ半減
+        </div>
+        <div>
+          <input type="checkbox" class="chk 2" id="enable_no_critical"> クリティカル無し
+        </div>
+      </div>
+      <hr>
+
+      <div class="row">
+        <button class="btn 3" onclick="damage_add_field()">+</button>
+        <button class="btn 3" onclick="damage_remove_field()">-</button>
+      </div>
+      <div class="field_index field-1">
+        <div>効果名</div>
+        <div>効果</div>
+        <div>ダイス効果</div>
+      </div>
+
+      <div id="damage_fields" class="buff_field">
+      </div>
+
+    <!-- <button onclick="test()" style="display:none;">test</button>-->
+      <button onclick="test()" style="display:none;">test</button>
 
       
-      <div>
-        <input type="checkbox" onclick=enable_enemy_defence() class="chk 2" id="enable_enemy_defence"> 敵防護点あり
+    </div>
+
+
+
+    <div id="tab_hit" class="tab-content">
+      <div class="row">
+        <button class="btn 1" onclick="hit_save('file')">命中セーブ</button>
+        <button class="btn 1" onclick="hit_load('file')">命中ロード</button>
       </div>
-      
-      <div class="row part" style="position: relative;">
-        <input id="enemy_defence"  class="fld 2 Z" placeholder="">
-        <label id="lab_defence" class="lab defence" for="impact_name_field">敵防護点</label>
+
+      <div class="row">
+        <button class="btn 1" onclick="hit_show()">表示/コピー</button>
+        <div>
+          <input class="chk 1" type="checkbox"  id="hit_enable_separate"> 個別出力
+        </div>
       </div>
-    </div>
-    <p style="margin:20px 0px"></p>
-    <div class="row">
-      
-      <div class="row part" style="position: relative;">
-        <input id="impact_value_field"  class="fld 2 N"  placeholder="" >
-        <label class="lab impact" for="impact_name_field">威力値</label>
+
+      <p id="hit_text" class="text">　</P>
+
+      <hr>
+
+      <p style="margin:20px 0px"></p>
+      <div class="row change">
+        <div id="hit_buttons"></div>
       </div>
-      <div class="row part" style="position: relative;">
-        <input id="critical_value_field"  class="fld 2 N" placeholder="">
-        <label class="lab critical" for="impact_name_field">クリティカル値</label>
+      <div class="row">
+        <div class="row part" style="position: relative;">
+          <input id="hit_name_field"  class="fld 2" placeholder="">
+          <label class="lab weapon" for="weapon_name_field">武器名</label>
+        </div>
+        <div class="row part" style="position: relative;">
+          <input class="fld 2 Z" id="hit_value_field" placeholder="" >
+          <label class="lab fix" for="hit_value_field" >固定値</label>
+        </div>
       </div>
-      <div class="row part" style="position: relative;">
-        <input id="damage_fix_value_field"  class="fld 2 Z" placeholder="" >
-        <label class="lab fix" for="impact_name_field">固定値</label>
+
+      <hr>
+
+      <div class="row">
+        <button class="btn 3" onclick="hit_add_field()">+</button>
+        <button class="btn 3" onclick="hit_remove_field()">-</button>
       </div>
-      
-    </div>
-    <div class="row">
-      <div >
-        <input type="checkbox" class="chk 2" id="enable_half_damage"> ダメージ半減
-      </div>
-      <div>
-        <input type="checkbox" class="chk 2" id="enable_no_critical"> クリティカル無し
-      </div>
-    </div>
-    <hr>
-
-    <div class="row">
-      <button class="btn 3" onclick="damage_add_field()">+</button>
-      <button class="btn 3" onclick="damage_remove_field()">-</button>
-    </div>
-    <div class="field_index field-1">
-      <div>効果名</div>
-      <div>効果</div>
-      <div>ダイス効果</div>
-    </div>
-
-    <div id="damage_fields" class="buff_field">
-    </div>
-
-  <!-- <button onclick="test()" style="display:none;">test</button>-->
-    <button onclick="test()" style="display:none;">test</button>
-
-    
-  </div>
-
-
-
-  <div id="tab_hit" class="tab-content">
-    <div class="row">
-      <button class="btn 1" onclick="hit_save('file')">命中セーブ</button>
-      <button class="btn 1" onclick="hit_load('file')">命中ロード</button>
-    </div>
-
-    <div class="row">
-      <button class="btn 1" onclick="hit_show()">表示/コピー</button>
-      <div>
-        <input class="chk 1" type="checkbox"  id="hit_enable_separate"> 個別出力
-      </div>
-    </div>
-
-    <p id="hit_text" class="text">　</P>
-
-    <hr>
-
-    <p style="margin:20px 0px"></p>
-    <div class="row">
-      <div class="row part" style="position: relative;">
-        <input class="fld 2 Z" id="hit_value_field" placeholder="" >
-        <label class="lab fix" for="hit_value_field" >固定値</label>
-      </div>
-    </div>
-
-    <hr>
-
-    <div class="row">
-      <button class="btn 3" onclick="hit_add_field()">+</button>
-      <button class="btn 3" onclick="hit_remove_field()">-</button>
-    </div>
-    <div class="field_index field-2">
-      <div>効果名</div>
-      <div>効果</div>
-    </div>
-    <div id="hit_fields" class="buff_field"></div>
-
-  <!-- <button onclick="test()" style="display:none;">test</button>-->
-    <button onclick="test()" style="display:none;">test</button>
-  </div>
-
-  <div id="tab_avoid" class="tab-content">
-    <div class="row">
-      <button class="btn 1" onclick="avoid_save('file')">回避セーブ</button>
-      <button class="btn 1" onclick="avoid_load('file')">回避ロード</button>
-    </div>
-
-    <div class="row">
-      <button class="btn 1" onclick="avoid_show()">表示/コピー</button>
-      <div>
-        <input class="chk 1" type="checkbox"  id="avoid_enable_separate"> 個別出力
-      </div>
-    </div>
-
-    <p id="avoid_text" class="text">　</P>
-
-    <hr>
-    <p style="margin:20px 0px"></p>
-    <div class="row">
-      <div class="row part" style="position: relative;">
-        <input class="fld 2 Z" id="avoid_value_field" placeholder="" >
-        <label class="lab fix" for="avoid_value_field" >固定値</label>
-      </div>
-    </div>
-
-    <hr>
-
-    <div class="row">
-      <button class="btn 3" onclick="avoid_add_field()">+</button>
-      <button class="btn 3" onclick="avoid_remove_field()">-</button>
-    </div>
       <div class="field_index field-2">
-      <div>効果名</div>
-      <div>効果</div>
+        <div>効果名</div>
+        <div>効果</div>
+      </div>
+      <div id="hit_fields" class="buff_field"></div>
+
+    <!-- <button onclick="test()" style="display:none;">test</button>-->
+      <button onclick="test()" style="display:none;">test</button>
     </div>
 
-    <div id="avoid_fields" class="buff_field"></div>
-  
-  </div>
+    <div id="tab_avoid" class="tab-content">
+      <div class="row">
+        <button class="btn 1" onclick="avoid_save('file')">回避セーブ</button>
+        <button class="btn 1" onclick="avoid_load('file')">回避ロード</button>
+      </div>
 
-  <div id="tab_save" class="tab-content">
-    ファイルからセーブ・ロード
-    <div class="row">
-      <button class="btn 1" onclick="damage_save('file')">ダメージセーブ</button>
-      <button class="btn 1" onclick="damage_load('file')">ダメージロード</button>
-    </div>
-    <div class="row">
-      <button class="btn 1" onclick="hit_save('file')">命中セーブ</button>
-      <button class="btn 1" onclick="hit_load('file')">命中ロード</button>
-    </div>
-    <div class="row">
-      <button class="btn 1" onclick="avoid_save('file')">回避セーブ</button>
-      <button class="btn 1" onclick="avoid_load('file')">回避ロード</button>
-    </div>
-    <br>
-    <div class="row">
-      <button class="btn 2" onclick="all_save('file')">全体セーブ</button>
-      <button class="btn 2" onclick="all_load('file')">全体ロード</button>
-    </div>
-    <hr>
-    テキストからセーブ・ロード
       <div class="row">
-        
-        <button class="btn 2" onclick="damage_save('text')">ダメージセーブ</button>
-        <button class="btn 2" onclick="hit_save('text')">命中セーブ</button>
-        <button class="btn 2" onclick="avoid_save('text')">回避セーブ</button>
-        
-      
+        <button class="btn 1" onclick="avoid_show()">表示/コピー</button>
+        <div>
+          <input class="chk 1" type="checkbox"  id="avoid_enable_separate"> 個別出力
+        </div>
       </div>
+
+      <p id="avoid_text" class="text">　</P>
+
+      <hr>
+      <p style="margin:20px 0px"></p>
       <div class="row">
-        <button class="btn 2" onclick="all_save('text')">全体セーブ</button>
+        <div class="row part" style="position: relative;">
+          <input class="fld 2 Z" id="avoid_value_field" placeholder="" >
+          <label class="lab fix" for="avoid_value_field" >固定値</label>
+        </div>
       </div>
-      <div style="height:10px"></div>
+
+      <hr>
+
       <div class="row">
-        <button class="btn 2" onclick="load_from_text()">テキストからロード</button>  
-        <button class="btn 2" onclick="copy_data_field()">データテキストコピー
+        <button class="btn 3" onclick="avoid_add_field()">+</button>
+        <button class="btn 3" onclick="avoid_remove_field()">-</button>
       </div>
-      
+        <div class="field_index field-2">
+        <div>効果名</div>
+        <div>効果</div>
+      </div>
+
+      <div id="avoid_fields" class="buff_field"></div>
     
-    <textarea type="text" id="data_field" class="data_field" placeholder="セーブデータ"></textarea>
-
-  </div>  
-
-<div id="tab_hint" class="tab-content">
-    <div class="hint">
-      <p class="headline">セーブ・ロードについて</p>
-      　ダメージ、命中、回避タブについて、個別にセーブ・ロードできます。<br>
-      　異なる種類のセーブデータはロードできません。<br>
-      <br>
-      　データ管理タブから、すべてのタブをまとめてセーブ・ロードできます。<br>
-      　個別ロードは全体セーブデータをロードできません。逆もしかりです。<br>
-      <br>
-      　ファイルからセーブ・ロードでは、セーブデータのファイル出力、およびファイル読み込みができます。<br>
-      　テキストからセーブ・ロードでは、テキストフィールドにセーブデータの出力や、テキストフィールドに入力したセーブデータを読み込むことができます。<br>
-      　データテキストコピーから、テキストフィールドのセーブデータをコピーできます。<br>
-      <br>
-        ※ファイルからのセーブ・ロードは、一部ブラウザ(safari、firefoxなど)では対応していません。テキストからのセーブ・ロードをご利用ください。
-      <hr>
-      <p class="headline">入力欄について</p>
-      　武器名には、武器名を入力します。威力値・クリティカル値・固定値・命中力・回避力の入力欄には、バフを含んでいない場合の値を入力します。<br>
-      <br>
-      ・敵防護点あり:チェックを入れると敵防護点の欄が出現し、敵防護点を含めた出力ができます。<br>
-      ・半減:ダメージを半減します。(攻撃魔法の抵抗成功時など)<br>
-      ・クリティカル無し:クリティカル値が13となり、クリティカルが発生しなくなります。
-      <hr>
-      <p class="headline">バフ枠・ダイス種類について</p>
-      　各タブの+と-で、バフ枠を増減できます。<br>効果名にバフの名前を、効果に数値の変動量、ダイス効果(ダメージのみ)に効果の種類を入力します。チェックボックスで、バフの有効化、無効化を切り替えられます。<br>
-      <br>
-      ・固定値:数値の固定値を増減します。(マッスルベアー、全力攻撃など)<br>・C値増減:クリティカル値が増減します。(かいくぐり、クリティカルキャストなど)<br>・ダイス目増減(継続):威力値の出目が増減します。(必殺攻撃など)<br>・ダイス目増減(初回):威力値が増減します。クリティカル後に適用されません。(クリティカル・レイなど)<br>・ダイス目固定:片方のダイス目を固定します。(薬師道具セットなど)<br>
-      <br>
-      　上矢印のボタン・下矢印でバフ欄を入れ替えられます。<br>
-      <hr>
-      <p class="headline">表示/コピーについて</p>
-      　各タブの表示コピーで、ダイスコマンドを表示、およびコマンドをクリップボードにコピーします。そのままダイスコマンドとして貼り付けて使用可能です。<br>
-      <br>
-      ・個別出力:固定値・C値・命中力・回避力を、合算して出力する(例:2d6+6)か、個別に出力する(例:2d6+5+1+1-1)か選択できます<br>
-      <hr>
-      SW2.5 Dice Buff Helper web　　ver1.1.0<br>
-      2026/04/17 公開<br>
-      <br>
-      @2026 そにうむ(sonium) All rights reserved.<br>
-      <br>
-      本ソフトウェアはグループSNE及び株式会社KADOKAWAが権利を有する『ソード・ワールド2.5』の二次創作です。<br>
-      <br>
-      許可のない無断転載・再配布を禁じます。<br>
-      Unauthorized reproduction or redistribution is prohibited.<br>
-      本ソフトウェアを使用して発生したいかなる損害も、著作者は責任を負いません。<br>
-      The author shall not be held liable for any damages arising from the use of this software.
-      <br>
-      <a href="https://bsky.app/profile/sonium3917.bsky.social">Bluesky:https://bsky.app/profile/sonium3917.bsky.social</a><br></bt>
-      <a href="https://sonium-trpg.booth.pm/items/8124850">Booth:https://sonium-trpg.booth.pm/items/8124850</a>
     </div>
-  </div>
-  
-</div>
 
+    <div id="tab_save" class="tab-content">
+      ファイルからセーブ・ロード
+      <div class="row">
+        <button class="btn 1" onclick="damage_save('file')">ダメージセーブ</button>
+        <button class="btn 1" onclick="damage_load('file')">ダメージロード</button>
+      </div>
+      <div class="row">
+        <button class="btn 1" onclick="hit_save('file')">命中セーブ</button>
+        <button class="btn 1" onclick="hit_load('file')">命中ロード</button>
+      </div>
+      <div class="row">
+        <button class="btn 1" onclick="avoid_save('file')">回避セーブ</button>
+        <button class="btn 1" onclick="avoid_load('file')">回避ロード</button>
+      </div>
+      <br>
+      <div class="row">
+        <button class="btn 2" onclick="all_save('file')">全体セーブ</button>
+        <button class="btn 2" onclick="all_load('file')">全体ロード</button>
+      </div>
+      <hr>
+      テキストからセーブ・ロード
+        <div class="row">
+          
+          <button class="btn 2" onclick="damage_save('text')">ダメージセーブ</button>
+          <button class="btn 2" onclick="hit_save('text')">命中セーブ</button>
+          <button class="btn 2" onclick="avoid_save('text')">回避セーブ</button>
+          
+        
+        </div>
+        <div class="row">
+          <button class="btn 2" onclick="all_save('text')">全体セーブ</button>
+        </div>
+        <div style="height:10px"></div>
+        <div class="row">
+          <button class="btn 2" onclick="load_from_text()">テキストからロード</button>  
+          <button class="btn 2" onclick="copy_data_field()">データテキストコピー
+        </div>
+        
+      
+      <textarea type="text" id="data_field" class="data_field" placeholder="セーブデータ"></textarea>
+
+    </div>  
+
+    <div id="tab_hint" class="tab-content">
+      <div class="hint">
+        <p class="headline">セーブ・ロードについて</p>
+        　ダメージ、命中、回避タブについて、個別にセーブ・ロードできます。<br>
+        　異なる種類のセーブデータはロードできません。<br>
+        <br>
+        　データ管理タブから、すべてのタブをまとめてセーブ・ロードできます。<br>
+        　個別ロードは全体セーブデータをロードできません。逆もしかりです。<br>
+        <br>
+        　ファイルからセーブ・ロードでは、セーブデータのファイル出力、およびファイル読み込みができます。<br>
+        　テキストからセーブ・ロードでは、テキストフィールドにセーブデータの出力や、テキストフィールドに入力したセーブデータを読み込むことができます。<br>
+        　データテキストコピーから、テキストフィールドのセーブデータをコピーできます。<br>
+        <br>
+          ※ファイルからのセーブ・ロードは、一部ブラウザ(safari、firefoxなど)では対応していません。テキストからのセーブ・ロードをご利用ください。
+        <hr>
+        <p class="headline">入力欄について</p>
+        　武器名には、武器名を入力します。威力値・クリティカル値・固定値・命中力・回避力の入力欄には、バフを含んでいない場合の値を入力します。<br>
+        <br>
+        ・敵防護点あり:チェックを入れると敵防護点の欄が出現し、敵防護点を含めた出力ができます。<br>
+        ・半減:ダメージを半減します。(攻撃魔法の抵抗成功時など)<br>
+        ・クリティカル無し:クリティカル値が13となり、クリティカルが発生しなくなります。<br><br>
+        　ダメージ、命中では、1~5のボタンで武器を切り替えることができます
+        <hr>
+        <p class="headline">バフ枠・ダイス種類について</p>
+        　各タブの+と-で、バフ枠を増減できます。<br>効果名にバフの名前を、効果に数値の変動量、ダイス効果(ダメージのみ)に効果の種類を入力します。チェックボックスで、バフの有効化、無効化を切り替えられます。<br>
+        <br>
+        ・固定値:数値の固定値を増減します。(マッスルベアー、全力攻撃など)<br>・C値増減:クリティカル値が増減します。(かいくぐり、クリティカルキャストなど)<br>・ダイス目増減(継続):威力値の出目が増減します。(必殺攻撃など)<br>・ダイス目増減(初回):威力値が増減します。クリティカル後に適用されません。(クリティカル・レイなど)<br>・ダイス目固定:片方のダイス目を固定します。(薬師道具セットなど)<br>
+        <br>
+        　上矢印のボタン・下矢印でバフ欄を入れ替えられます。<br>
+        <hr>
+        <p class="headline">表示/コピーについて</p>
+        　各タブの表示コピーで、ダイスコマンドを表示、およびコマンドをクリップボードにコピーします。そのままダイスコマンドとして貼り付けて使用可能です。<br>
+        <br>
+        ・個別出力:固定値・C値・命中力・回避力を、合算して出力する(例:2d6+6)か、個別に出力する(例:2d6+5+1+1-1)か選択できます<br>
+        <hr>
+        SW2.5 Dice Buff Helper web　　ver1.2.0<br>
+        <br>
+        2026/06/06 ver1.2.0 新セーブフォーマットに変更(旧フォーマットと互換性あり)。ダメージと命中で武器を切り替えられるようにしました。命中の武器名の入力欄を追加。バグ修正。<br>
+        2026/04/17 ver1.1.0 公開<br>
+        <br>
+        @2026 そにうむ(sonium) All rights reserved.<br>
+        <br>
+        本ソフトウェアはグループSNE及び株式会社KADOKAWAが権利を有する『ソード・ワールド2.5』の二次創作です。<br>
+        <br>
+        許可のない無断転載・再配布を禁じます。<br>
+        Unauthorized reproduction or redistribution is prohibited.<br>
+        本ソフトウェアを使用して発生したいかなる損害も、著作者は責任を負いません。<br>
+        The author shall not be held liable for any damages arising from the use of this software.
+        <br>
+        <a href="https://bsky.app/profile/sonium3917.bsky.social">Bluesky:https://bsky.app/profile/sonium3917.bsky.social</a><br></bt>
+        <a href="https://sonium-trpg.booth.pm/items/8124850">Booth:https://sonium-trpg.booth.pm/items/8124850</a>
+      </div>
+    </div>
+    
+  </div>
+</body>
 
 <script>
 const Id = (id) => document.getElementById(id);
@@ -294,6 +308,54 @@ var hit_field_count=0;
 var avoid_field_count=0;
 
 var now_tab="damage";
+
+const list_count=5;
+
+let weapon_state = 0;
+let hit_state = 0;
+let avoid_state=0;
+const weaponContainer = Id("weapon_buttons");
+const hitContainer = Id("hit_buttons");
+
+
+function renderButtons() {
+
+  weaponContainer.innerHTML = "";
+  hitContainer.innerHTML = "";
+
+  button_class="btn change";
+  for (let i = 0; i < list_count; i++) {
+
+      // weapon button
+      const weaponBtn = document.createElement("button");
+      weaponBtn.textContent = i + 1;
+      weaponBtn.className = button_class;
+
+      if (weapon_state === i) {
+          weaponBtn.classList.add("active");
+      }
+
+      weaponBtn.onclick = () => change_weapon(i);
+
+      weaponContainer.appendChild(weaponBtn);
+
+
+      // hit button
+      const hitBtn = document.createElement("button");
+      hitBtn.textContent = i + 1;
+      hitBtn.className = button_class;
+
+      if (hit_state === i) {
+          hitBtn.classList.add("active");
+      }
+
+      hitBtn.onclick = () => change_hit(i);
+
+      hitContainer.appendChild(hitBtn);
+  }
+}
+
+renderButtons();
 
 function showTab(tabId,btn) {
   document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
@@ -318,6 +380,7 @@ function showTab(tabId,btn) {
 }
 
 showTab("tab_damage",null);
+Id("damage_tab-btn").classList.add("active")
 
 async function handle_load_file(){
   try {
@@ -369,11 +432,11 @@ function notify(message) {
 
   setTimeout(() => {
     bar.classList.remove("show");
-  }, 2000);
+  }, 1000);
 }
 
 const container = document.getElementById('container');
-console.log(container)
+//console.log(container)
 document.addEventListener('DOMContentLoaded', () => {
   container.addEventListener('beforeinput', (e) => {
       // 実際に触られたのが input 要素で、かつクラス名に "natural" を持っているか？
@@ -625,23 +688,40 @@ function damage_show(e){
 }
 
 function damage_save(mode){
+  weapon_name_list[weapon_state]=Id("weapon_name_field").value
+  weapon_impact_list[weapon_state]=Id("impact_value_field").value
+  weapon_critical_list[weapon_state]=Id("critical_value_field").value
+  weapon_fix_list[weapon_state]=Id("damage_fix_value_field").value
   try{
-  var data={save_type:"damage",
+  var data={format:2,
+            save_type:"damage",
             weapon_name:Id("weapon_name_field").value,
             impact_value:Id("impact_value_field").value,
             critical_value:Id("critical_value_field").value,
             fix_value:Id("damage_fix_value_field").value,
-            effects:[]
+            effects:[],
+            weapon_list:[]
           }
-  
+
   for(let i=1;i<=damage_field_count;i++){
     data.effects.push({
-        effect_name:Id("damage_effect_name_"+1).value,
+        effect_name:Id("damage_effect_name_"+i).value,
         effect:Id("damage_effect_"+i).value,
         type:Id("damage_select_"+i).value,
         enabled:Id("damage_enable_"+i).checked
     })
   }
+
+  for(let i=0;i<list_count;i++){
+    data.weapon_list.push({
+        "weapon_name": weapon_name_list[i],
+        "impact_value": weapon_impact_list[i],
+        "critical_value": weapon_critical_list[i],
+        "fix_value": weapon_fix_list[i],
+    
+    })
+  }
+      console.log("a")
   data=JSON.stringify(data,null,2);
 
   if(mode=="file"){
@@ -666,7 +746,7 @@ function damage_save(mode){
     notify("Save complete!")
 }
 catch(err){
-  
+  console.error(err.message)
 }
 }
 
@@ -680,45 +760,80 @@ async function damage_load(mode){
     data=JSON.parse(Id("data_field").value);
     }
         console.log(data);
-    if(data.save_type=="damage"){
-      console.log(data.weapon_name)
-
-      const tem_count=damage_field_count
-      for(let j=0;j<tem_count;j++){
-        damage_remove_field()
-      }
-
-      Id("weapon_name_field").value=data.weapon_name;
-      Id("impact_value_field").value=data.impact_value;
-      Id("critical_value_field").value=data.critical_value;
-      Id("damage_fix_value_field").value=data.fix_value;
-
-      effect_count=data.effects.length;
-      console.log(effect_count);
-
-      for(let i=1;i<=effect_count;i++){
-        damage_add_field();
-        //Id("damage_felds.row[i]").value
-        
-        Id("damage_effect_name_"+i).value=data.effects[i-1].effect_name;
-        Id("damage_effect_"+i).value=data.effects[i-1].effect;
-        Id("damage_select_"+i).value=data.effects[i-1].type;
-        Id("damage_enable_"+i).checked=data.effects[i-1].enabled;
-
-      }
-      notify("Load complete!");
+    if(!("format" in data)){
+      data.format=1
     }
-    else{
+    if(data.save_type=="damage"){
+      if(data.format==1){
+        console.log(data.weapon_name)
+
+        const tem_count=damage_field_count
+        for(let j=0;j<tem_count;j++){
+          damage_remove_field()
+        }
+
+        Id("weapon_name_field").value=data.weapon_name;
+        Id("impact_value_field").value=data.impact_value;
+        Id("critical_value_field").value=data.critical_value;
+        Id("damage_fix_value_field").value=data.fix_value;
+
+        effect_count=data.effects.length;
+        console.log(effect_count);
+
+        for(let i=1;i<=effect_count;i++){
+          damage_add_field();
+          //Id("damage_felds.row[i]").value
+          
+          Id("damage_effect_name_"+i).value=data.effects[i-1].effect_name;
+          Id("damage_effect_"+i).value=data.effects[i-1].effect;
+          Id("damage_select_"+i).value=data.effects[i-1].type;
+          Id("damage_enable_"+i).checked=data.effects[i-1].enabled;
+
+        }
+        notify("Load complete!");
+      }
+      else if(data.format==2){
+        //for i in range(len(data[0]["weapon_list"])):
+        for(i=0;i<data.weapon_list.length;i++){
+            weapon_name_list[i]=data["weapon_list"][i]["weapon_name"]
+            weapon_impact_list[i]=data["weapon_list"][i]["impact_value"]
+            weapon_critical_list[i]=data["weapon_list"][i]["critical_value"]
+            weapon_fix_list[i]=data["weapon_list"][i]["fix_value"]        
+        }
+        weapon_state=0
+        Id("weapon_name_field").value=weapon_name_list[0]
+        Id("impact_value_field").value=weapon_impact_list[0]
+        Id("critical_value_field").value=weapon_critical_list[0]
+        Id("damage_fix_value_field").value=weapon_fix_list[0]
+        
+        effect_count=data.effects.length;
+        console.log(effect_count);
+
+        for(let i=1;i<=effect_count;i++){
+          damage_add_field();
+          //Id("damage_felds.row[i]").value
+          
+          Id("damage_effect_name_"+i).value=data.effects[i-1].effect_name;
+          Id("damage_effect_"+i).value=data.effects[i-1].effect;
+          Id("damage_select_"+i).value=data.effects[i-1].type;
+          Id("damage_enable_"+i).checked=data.effects[i-1].enabled;
+      } 
+   }
+   else{
+    notify("ERROR：Format error!");
+   }
+
+  }
+  else{
       console.log("not damage");
       notify("ERROR：Not a damege file!");
     }
-
-
   }
   catch(err){
     console.log(err);
     notify("ERROR：Loading error!");
   } 
+  renderButtons()
 }
 
 function damage_add_field(){
@@ -838,6 +953,35 @@ function damage_remove_field(){
 function damage_field_change(mode,index){
 console.log(mode)
 }
+
+weapon_name_list=[]
+weapon_impact_list=[]
+weapon_critical_list=[]
+weapon_fix_list=[]
+for(i=0;i<list_count;i++){
+    weapon_name_list.push("")
+    weapon_impact_list.push("")
+    weapon_critical_list.push("")
+    weapon_fix_list.push("")
+}
+function change_weapon(id) {
+  console.log(weapon_state,id)
+  weapon_name_list[weapon_state]=Id("weapon_name_field").value
+  Id("weapon_name_field").value=weapon_name_list[id]
+
+  weapon_impact_list[weapon_state]=Id("impact_value_field").value
+  Id("impact_value_field").value=weapon_impact_list[id]
+
+  weapon_critical_list[weapon_state]=Id("critical_value_field").value
+  Id("critical_value_field").value=weapon_critical_list[id]
+
+  weapon_fix_list[weapon_state]=Id("damage_fix_value_field").value
+  Id("damage_fix_value_field").value=weapon_fix_list[id]
+  weapon_state=id
+
+  renderButtons();
+}
+
 ////////////////////////
 
 function hit_total(){
@@ -892,6 +1036,8 @@ function hit_show(e){
 
   const separate_flag=Id("hit_enable_separate").checked;
 
+  var hit_name=Id("hit_name_field").value;
+
   var fix_value=Id("hit_value_field").value;
   if(fix_value===""||Number.isNaN(fix_value)){
     fix_value=0
@@ -927,23 +1073,36 @@ function hit_show(e){
     else
       fix_plus_minus=""
     }
-    text="2d6"+fix_plus_minus+fix+" 命中力／"+effect_name_all;
+    text="2d6"+fix_plus_minus+fix+" 命中力／"+hit_name+" "+effect_name_all;
     Id("hit_text").textContent=text;
     copy_to_clipboard(e,text)
     notify("Copied to clipboard!");
 }
 
 function hit_save(mode){
-  var data={save_type:"hit",
+  hit_name_list[hit_state]=Id("hit_name_field").value
+  hit_fix_list[hit_state]=Id("hit_value_field").value
+  
+  var data={format:2,
+            save_type:"hit",
             fix_value:Id("hit_value_field").value,
-            effects:[]
+            effects:[],
+            hit_list:[]
           }
   
   for(let i=1;i<=hit_field_count;i++){
     data.effects.push({
-        effect_name:Id("hit_effect_name_"+1).value,
+        effect_name:Id("hit_effect_name_"+i).value,
         effect:Id("hit_effect_"+i).value,
         enabled:Id("hit_enable_"+i).checked
+    })
+  }
+
+  for(let i=0;i<list_count;i++){
+    data.hit_list.push({
+      "hit_name": hit_name_list[i],
+      "hit_fix": hit_fix_list[i],
+  
     })
   }
   data=JSON.stringify(data,null,2);
@@ -979,26 +1138,58 @@ async function hit_load(mode){
     }
     console.log(data);
 
+    if(!("format" in data)){
+      data.format=1
+    }
     if(data.save_type=="hit"){
+      if(data.format==1){
+        const tem_count=hit_field_count
+        for(let i=0;i<tem_count;i++){
+          hit_remove_field()
+        }
 
-      const tem_count=hit_field_count
-      for(let i=0;i<tem_count;i++){
-        hit_remove_field()
-      }
+        Id("hit_value_field").value=data.fix_value;
 
-      Id("hit_value_field").value=data.fix_value;
+        effect_count=data.effects.length;
+        console.log(effect_count);
 
-      effect_count=data.effects.length;
-      console.log(effect_count);
-
-      for(let i=1;i<=effect_count;i++){
-       hit_add_field();
-        //Id("damage_felds.row[i]").value
-        
-        Id("hit_effect_name_"+i).value=data.effects[i-1].effect_name;
-        Id("hit_effect_"+i).value=data.effects[i-1].effect;
-        Id("hit_enable_"+i).checked=data.effects[i-1].enabled;
+        for(let i=1;i<=effect_count;i++){
+        hit_add_field();
+          //Id("damage_felds.row[i]").value
+          
+          Id("hit_effect_name_"+i).value=data.effects[i-1].effect_name;
+          Id("hit_effect_"+i).value=data.effects[i-1].effect;
+          Id("hit_enable_"+i).checked=data.effects[i-1].enabled;
+          
+          }
         notify("Load complete!");
+      }
+      else if(data.format==2){
+        for(i=0;i<data.hit_list.length;i++){
+            hit_name_list[i]=data["hit_list"][i]["hit_name"]
+            hit_fix_list[i]=data["hit_list"][i]["hit_fix"]        
+        }
+        
+        hit_state=0
+        Id("hit_name_field").value=hit_name_list[0]
+        Id("hit_value_field").value=hit_fix_list[0]
+        
+        effect_count=data.effects.length;
+        console.log(effect_count);
+
+        for(let i=1;i<=effect_count;i++){
+        hit_add_field();
+          //Id("damage_felds.row[i]").value
+          
+          Id("hit_effect_name_"+i).value=data.effects[i-1].effect_name;
+          Id("hit_effect_"+i).value=data.effects[i-1].effect;
+          Id("hit_enable_"+i).checked=data.effects[i-1].enabled;
+          
+          }
+        notify("Load complete!");
+      }
+      else{
+        notify("ERROR：Format error!");
       }
     }
     else{
@@ -1012,6 +1203,7 @@ async function hit_load(mode){
     console.log(err)
     notify("ERROR：Loading error!")
   } 
+  renderButtons()
 }
 
 function hit_add_field(){
@@ -1088,6 +1280,25 @@ function hit_remove_field(){
   }
   console.log(hit_field_count)
 }
+
+hit_name_list=[]
+hit_fix_list=[]
+for(i=0;i<list_count;i++){
+    hit_name_list.push("")
+    hit_fix_list.push("")
+}
+function change_hit(id) {
+  console.log(hit_state,id)
+  hit_name_list[hit_state]=Id("hit_name_field").value
+  Id("hit_name_field").value=hit_name_list[id]
+
+  hit_fix_list[hit_state]=Id("hit_value_field").value
+  Id("hit_value_field").value=hit_fix_list[id]
+  hit_state=id
+
+  renderButtons();
+}
+
 ////////////////////////
 
 function avoid_total(){
@@ -1184,18 +1395,25 @@ function avoid_show(e){
   }
 
 function avoid_save(mode){
-  var data={save_type:"avoid",
+  avoid_fix_list[avoid_state]=Id("avoid_value_field").value
+  var data={format:2,
+            save_type:"avoid",
             fix_value:Id("avoid_value_field").value,
-            effects:[]
+            effects:[],
+            avoid_list:[]
           }
   
   for(let i=1;i<=avoid_field_count;i++){
     data.effects.push({
-        effect_name:Id("avoid_effect_name_"+1).value,
+        effect_name:Id("avoid_effect_name_"+i).value,
         effect:Id("avoid_effect_"+i).value,
         enabled:Id("avoid_enable_"+i).checked
     })
   }
+  for(let i=0;i<list_count;i++){
+    data.avoid_list.push({
+        "avoid_fix":avoid_fix_list[i],
+    })}
   data=JSON.stringify(data,null,2);
   if(mode=="file"){
   const blob=new Blob([data],{type:"application/json"})
@@ -1219,7 +1437,6 @@ function avoid_save(mode){
     notify("Copied to clipboard!");
 
 }
-
 async function avoid_load(mode){
   try{
     if(mode=="file"){
@@ -1229,29 +1446,57 @@ async function avoid_load(mode){
     data=JSON.parse(Id("data_field").value);
     }
     console.log(data);
-
+    if(!("format" in data)){
+      data.format=1
+    }
     if(data.save_type=="avoid"){
+      if(data.format==1){
+        const tem_count=avoid_field_count
+        for(let i=0;i<tem_count;i++){
+          avoid_remove_field()
+        }
 
-      const tem_count=avoid_field_count
-      for(let i=0;i<tem_count;i++){
-        avoid_remove_field()
+        Id("avoid_value_field").value=data.fix_value;
+
+        effect_count=data.effects.length;
+        console.log(effect_count);
+
+        for(let i=1;i<=effect_count;i++){
+        avoid_add_field();
+          //Id("damage_felds.row[i]").value
+          
+          Id("avoid_effect_name_"+i).value=data.effects[i-1].effect_name;
+          Id("avoid_effect_"+i).value=data.effects[i-1].effect;
+          Id("avoid_enable_"+i).checked=data.effects[i-1].enabled;
+
+        }
+        notify("Load complete!");
       }
-
-      Id("avoid_value_field").value=data.fix_value;
-
-      effect_count=data.effects.length;
-      console.log(effect_count);
-
-      for(let i=1;i<=effect_count;i++){
-       avoid_add_field();
-        //Id("damage_felds.row[i]").value
+      else if(data.format==2){
+        for(i=0;i<data.avoid_list.length;i++){
+            avoid_fix_list[i]=data["avoid_list"][i]["avoid_fix"]        
+        }
         
-        Id("avoid_effect_name_"+i).value=data.effects[i-1].effect_name;
-        Id("avoid_effect_"+i).value=data.effects[i-1].effect;
-        Id("avoid_enable_"+i).checked=data.effects[i-1].enabled;
+        avoid_state=0
+        Id("avoid_value_field").value=avoid_fix_list[0]
+        
+        effect_count=data.effects.length;
+        console.log(effect_count);
 
+        for(let i=1;i<=effect_count;i++){
+        avoid_add_field();
+          //Id("damage_felds.row[i]").value
+          
+          Id("avoid_effect_name_"+i).value=data.effects[i-1].effect_name;
+          Id("avoid_effect_"+i).value=data.effects[i-1].effect;
+          Id("avoid_enable_"+i).checked=data.effects[i-1].enabled;
+
+        }
+        notify("Load complete!");
       }
-      notify("Load complete!");
+      else{
+        notify("ERROR：Format error!");
+      }
     }
     else{
       console.log("not avoid")
@@ -1264,6 +1509,7 @@ async function avoid_load(mode){
     console.log(err)
     notify("ERROR：Loading error!")
   } 
+  renderButtons()
 }
 
 function avoid_add_field(){
@@ -1340,46 +1586,89 @@ function avoid_remove_field(){
   }
   console.log(avoid_field_count)
 }
+
+avoid_fix_list=[]
+for(i=0;i<list_count;i++){
+    avoid_fix_list.push("")
+}
+function change_avoid(id) {
+  console.log(avoid_state,id)
+  //hit_name_list[hit_state]=Id("hit_name_field").value
+  //Id("hit_name_field").value=hit_name_list[id]
+
+  avoid_fix_list[avoid_state]=Id("avoid_value_field").value
+  Id("avoid_value_field").value=avoid_fix_list[id]
+  avoid_state=id
+
+  renderButtons();
+}
 ////////////////////////
 
 function all_save(mode){
-  var data={save_type:"all",
-           "impact":{
+  var data={format:2,
+            save_type:"all",
+            "impact":{
               weapon_name:Id("weapon_name_field").value,
               impact_value:Id("impact_value_field").value,
               critical_value:Id("critical_value_field").value,
               fix_value:Id("damage_fix_value_field").value,
-              effects:[]},
+              effects:[],
+              weapon_list:[]},
             "hit":{ 
               fix_value:Id("hit_value_field").value,
-              effects:[]},
+              effects:[],
+              hit_list:[]
+            },
             "avoid":{
               fix_value:Id("avoid_value_field").value,
-              effects:[]
+              effects:[],
+              avoid_list:[]
             }
 
           }
   
   for(let i=1;i<=damage_field_count;i++){
     data.impact.effects.push({
-        effect_name:Id("damage_effect_name_"+1).value,
+        effect_name:Id("damage_effect_name_"+i).value,
         effect:Id("damage_effect_"+i).value,
         type:Id("damage_select_"+i).value,
         enabled:Id("damage_enable_"+i).checked
     })
   }
+  for(let i=0;i<list_count;i++){
+    data.impact.weapon_list.push({
+        "weapon_name": weapon_name_list[i],
+        "impact_value": weapon_impact_list[i],
+        "critical_value": weapon_critical_list[i],
+        "fix_value": weapon_fix_list[i],
+    
+    })
+  }
+
   for(let i=1;i<=hit_field_count;i++){
     data.hit.effects.push({
-        effect_name:Id("hit_effect_name_"+1).value,
+        effect_name:Id("hit_effect_name_"+i).value,
         effect:Id("hit_effect_"+i).value,
         enabled:Id("hit_enable_"+i).checked
     })
   }
+  for(let i=0;i<list_count;i++){
+    data.hit.hit_list.push({
+      "hit_name": hit_name_list[i],
+      "hit_fix": hit_fix_list[i],
+    })
+  }
+
   for(let i=1;i<=avoid_field_count;i++){
     data.avoid.effects.push({
-        effect_name:Id("avoid_effect_name_"+1).value,
+        effect_name:Id("avoid_effect_name_"+i).value,
         effect:Id("avoid_effect_"+i).value,
         enabled:Id("avoid_enable_"+i).checked
+    })
+  }
+  for(let i=0;i<list_count;i++){
+    data.avoid.avoid_list.push({
+        "avoid_fix":avoid_fix_list[i],
     })
   }
 
@@ -1416,73 +1705,161 @@ async function all_load(mode){
     data=JSON.parse(Id("data_field").value);
     }
     console.log(data);
+    if(!("format" in data)){
+      data.format=1
+    }
+    damage_data=data.impact;
+    hit_data=data.hit;
+    avoid_data=data.avoid
 
+    const damage_tem_count=damage_field_count;
+    const hit_tem_count=hit_field_count;
+    const avoid_tem_count=avoid_field_count;
     if(data.save_type=="all"){
-      console.log(data.weapon_name)
+      if(data.format==1){
+        console.log(data.weapon_name)
 
-      damage_data=data.impact;
-      hit_data=data.hit;
-      avoid_data=data.avoid
+        damage_data=data.impact;
+        hit_data=data.hit;
+        avoid_data=data.avoid
 
-      const damage_tem_count=damage_field_count;
-      const hit_tem_count=hit_field_count;
-      const avoid_tem_count=avoid_field_count;
-      for(let j=0;j<damage_tem_count;j++){
-        damage_remove_field()
-      }
-      for(let j=0;j<hit_tem_count;j++){
-        hit_remove_field()
-      }
-      for(let j=0;j<avoid_tem_count;j++){
-        avoid_remove_field()
-      }
-
-      Id("weapon_name_field").value=damage_data.weapon_name;
-      Id("impact_value_field").value=damage_data.impact_value;
-      Id("critical_value_field").value=damage_data.critical_value;
-      Id("damage_fix_value_field").value=damage_data.fix_value;
-
-      effect_count=damage_data.effects.length;
-      console.log(effect_count);
-
-      for(let i=1;i<=effect_count;i++){
-        damage_add_field();
-        //Id("damage_felds.row[i]").value
-        
-        Id("damage_effect_name_"+i).value=damage_data.effects[i-1].effect_name;
-        Id("damage_effect_"+i).value=damage_data.effects[i-1].effect;
-        Id("damage_select_"+i).value=damage_data.effects[i-1].type;
-        Id("damage_enable_"+i).checked=damage_data.effects[i-1].enabled;
-      }
-      
-      Id("hit_value_field").value=hit_data.fix_value;
-
-      effect_count=hit_data.effects.length;
-      console.log(effect_count);
-
-      for(let i=1;i<=effect_count;i++){
-       hit_add_field();
-        //Id("damage_felds.row[i]").value
-        
-        Id("hit_effect_name_"+i).value=hit_data.effects[i-1].effect_name;
-        Id("hit_effect_"+i).value=hit_data.effects[i-1].effect;
-        Id("hit_enable_"+i).checked=hit_data.effects[i-1].enabled;
+        const damage_tem_count=damage_field_count;
+        const hit_tem_count=hit_field_count;
+        const avoid_tem_count=avoid_field_count;
+        for(let j=0;j<damage_tem_count;j++){
+          damage_remove_field()
         }
-      
-      Id("avoid_value_field").value=avoid_data.fix_value;
-        effect_count=avoid_data.effects.length;
-      console.log(effect_count);
+        for(let j=0;j<hit_tem_count;j++){
+          hit_remove_field()
+        }
+        for(let j=0;j<avoid_tem_count;j++){
+          avoid_remove_field()
+        }
 
-      for(let i=1;i<=effect_count;i++){
-       avoid_add_field();
-        //Id("damage_felds.row[i]").value
+        Id("weapon_name_field").value=damage_data.weapon_name;
+        Id("impact_value_field").value=damage_data.impact_value;
+        Id("critical_value_field").value=damage_data.critical_value;
+        Id("damage_fix_value_field").value=damage_data.fix_value;
+
+        effect_count=damage_data.effects.length;
+        console.log(effect_count);
+
+        for(let i=1;i<=effect_count;i++){
+          damage_add_field();
+          //Id("damage_felds.row[i]").value
+          
+          Id("damage_effect_name_"+i).value=damage_data.effects[i-1].effect_name;
+          Id("damage_effect_"+i).value=damage_data.effects[i-1].effect;
+          Id("damage_select_"+i).value=damage_data.effects[i-1].type;
+          Id("damage_enable_"+i).checked=damage_data.effects[i-1].enabled;
+        }
         
-        Id("avoid_effect_name_"+i).value=avoid_data.effects[i-1].effect_name;
-        Id("avoid_effect_"+i).value=avoid_data.effects[i-1].effect;
-        Id("avoid_enable_"+i).checked=avoid_data.effects[i-1].enabled;
+        Id("hit_value_field").value=hit_data.fix_value;
 
-      }
-      notify("Load complete!")
+        effect_count=hit_data.effects.length;
+        console.log(effect_count);
+
+        for(let i=1;i<=effect_count;i++){
+        hit_add_field();
+          //Id("damage_felds.row[i]").value
+          
+          Id("hit_effect_name_"+i).value=hit_data.effects[i-1].effect_name;
+          Id("hit_effect_"+i).value=hit_data.effects[i-1].effect;
+          Id("hit_enable_"+i).checked=hit_data.effects[i-1].enabled;
+          }
+        
+        Id("avoid_value_field").value=avoid_data.fix_value;
+          effect_count=avoid_data.effects.length;
+        console.log(effect_count);
+
+        for(let i=1;i<=effect_count;i++){
+        avoid_add_field();
+          //Id("damage_felds.row[i]").value
+          
+          Id("avoid_effect_name_"+i).value=avoid_data.effects[i-1].effect_name;
+          Id("avoid_effect_"+i).value=avoid_data.effects[i-1].effect;
+          Id("avoid_enable_"+i).checked=avoid_data.effects[i-1].enabled;
+
+        }
+        notify("Load complete!")
+        }
+        else if (data.format==2){
+          for(i=0;i<damage_data.weapon_list.length;i++){
+            weapon_name_list[i]=damage_data["weapon_list"][i]["weapon_name"]
+            weapon_impact_list[i]=damage_data["weapon_list"][i]["impact_value"]
+            weapon_critical_list[i]=damage_data["weapon_list"][i]["critical_value"]
+            weapon_fix_list[i]=damage_data["weapon_list"][i]["fix_value"]        
+          }
+          weapon_state=0
+          Id("weapon_name_field").value=weapon_name_list[0]
+          Id("impact_value_field").value=weapon_impact_list[0]
+          Id("critical_value_field").value=weapon_critical_list[0]
+          Id("damage_fix_value_field").value=weapon_fix_list[0]
+          
+          effect_count=damage_data.effects.length;
+          console.log(effect_count);
+          for(let j=0;j<damage_tem_count;j++){
+            damage_remove_field()
+          }
+          for(let i=1;i<=effect_count;i++){
+            damage_add_field();
+            //Id("damage_felds.row[i]").value
+            
+            Id("damage_effect_name_"+i).value=damage_data.effects[i-1].effect_name;
+            Id("damage_effect_"+i).value=damage_data.effects[i-1].effect;
+            Id("damage_select_"+i).value=damage_data.effects[i-1].type;
+            Id("damage_enable_"+i).checked=damage_data.effects[i-1].enabled;
+          } 
+
+          for(i=0;i<hit_data.hit_list.length;i++){
+            hit_name_list[i]=hit_data["hit_list"][i]["hit_name"]
+            hit_fix_list[i]=hit_data["hit_list"][i]["hit_fix"]        
+        }
+        
+          hit_state=0
+          Id("hit_name_field").value=hit_name_list[0]
+          Id("hit_value_field").value=hit_fix_list[0]
+          
+          effect_count=hit_data.effects.length;
+          console.log(effect_count);
+
+          for(let j=0;j<hit_tem_count;j++){
+          hit_remove_field()
+          }
+          for(let i=1;i<=effect_count;i++){
+          hit_add_field();
+          //Id("damage_felds.row[i]").value
+          
+          Id("hit_effect_name_"+i).value=hit_data.effects[i-1].effect_name;
+          Id("hit_effect_"+i).value=hit_data.effects[i-1].effect;
+          Id("hit_enable_"+i).checked=hit_data.effects[i-1].enabled;
+          
+          }
+
+          for(i=0;i<avoid_data.avoid_list.length;i++){
+          avoid_fix_list[i]=avoid_data["avoid_list"][i]["avoid_fix"]        
+          }
+      
+          avoid_state=0
+          Id("avoid_value_field").value=avoid_fix_list[0]
+          
+          effect_count=avoid_data.effects.length;
+          console.log(effect_count);
+
+          for(let j=0;j<avoid_tem_count;j++){
+          avoid_remove_field()
+          } 
+          for(let i=1;i<=effect_count;i++){
+          avoid_add_field();
+            //Id("damage_felds.row[i]").value
+            
+            Id("avoid_effect_name_"+i).value=avoid_data.effects[i-1].effect_name;
+            Id("avoid_effect_"+i).value=avoid_data.effects[i-1].effect;
+            Id("avoid_enable_"+i).checked=avoid_data.effects[i-1].enabled;
+
+          }
+        notify("Load complete!");
+        }
       }
     else{
       console.log("not damage")
@@ -1495,6 +1872,7 @@ async function all_load(mode){
     console.log(err)
     notify("ERROR：Loading error!")
   } 
+  renderButtons()
 }
 
 function load_from_text(){
@@ -1594,6 +1972,9 @@ overflow: hidden;
   gap:0px;
   margin:0px 0px;
 }
+.row.change {
+    grid-template-columns: none;
+}
 .table{
    display: grid;
   grid-template-columns: 120px 120px 120px 30px 30px 30px;
@@ -1649,15 +2030,22 @@ grid-template-columns: 155px 95px 35px 35px 35px;
 }
 
 .btn{
- border: 2px solid #88f;
+  border: 2px solid #88f;  
   border-radius: 8px;
   background: #fff;
   cursor: pointer;
   height:30px;
 }
+.btn.active{
+  border:2px solid #44f;
+  background:#ccc;
+}
 .btn:hover{
   background: #aaa;
-
+}
+.btn.change{
+ width:30px;
+ margin:5px;
 }
 
 .fld{
@@ -1707,8 +2095,8 @@ grid-template-columns: 155px 95px 35px 35px 35px;
 }
 
 .hint{
-    height: 600px;
-  width:90%;
+  height: 600px;
+  width:100%;
   overflow: auto;
 }
 .headline{
